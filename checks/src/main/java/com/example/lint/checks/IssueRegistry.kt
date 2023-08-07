@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 The Android Open Source Project
+ * Copyright (C) 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,8 @@ import com.android.tools.lint.detector.api.CURRENT_API
 /*
  * The list of issues that will be checked when running <code>lint</code>.
  */
-@Suppress("UnstableApiUsage")
 class SampleIssueRegistry : IssueRegistry() {
-    override val issues = listOf(SampleCodeDetector.ISSUE)
+    override val issues = listOf(StrandhoggDetector.ISSUE)
 
     override val api: Int
         get() = CURRENT_API
@@ -34,9 +33,10 @@ class SampleIssueRegistry : IssueRegistry() {
 
     // Requires lint API 30.0+; if you're still building for something
     // older, just remove this property.
-    override val vendor: Vendor = Vendor(
-        vendorName = "Android Open Source Project",
-        feedbackUrl = "https://github.com/googlesamples/android-custom-lint-rules/issues",
-        contact = "https://github.com/googlesamples/android-custom-lint-rules"
-    )
+    override val vendor: Vendor =
+        Vendor(
+            vendorName = "Google - Android Vulnerability Research",
+            feedbackUrl = "https://github.com/googlestaging/android-security-lints/issues",
+            contact = "https://github.com/googlestaging/android-security-lints"
+        )
 }
