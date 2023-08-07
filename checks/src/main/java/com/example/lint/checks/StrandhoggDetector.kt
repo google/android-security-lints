@@ -15,8 +15,19 @@
  */
 package com.example.lint.checks
 
-import com.android.SdkConstants.*
-import com.android.tools.lint.detector.api.*
+import com.android.SdkConstants.ANDROID_URI
+import com.android.SdkConstants.ATTR_TARGET_SDK_VERSION
+import com.android.SdkConstants.TAG_USES_SDK
+import com.android.tools.lint.detector.api.Category
+import com.android.tools.lint.detector.api.Detector
+import com.android.tools.lint.detector.api.Implementation
+import com.android.tools.lint.detector.api.Incident
+import com.android.tools.lint.detector.api.Issue
+import com.android.tools.lint.detector.api.Severity
+import com.android.tools.lint.detector.api.Scope
+import com.android.tools.lint.detector.api.XmlContext
+import com.android.tools.lint.detector.api.XmlScanner
+import com.android.tools.lint.detector.api.targetSdkLessThan
 import org.w3c.dom.Element
 
 /**
@@ -32,13 +43,16 @@ class StrandhoggDetector : Detector(), XmlScanner {
                 element,
                 context.getValueLocation(element.getAttributeNodeNS(ANDROID_URI, ATTR_TARGET_SDK_VERSION)),
                 "Update your application's target SDK version to 28 and above to protect it from " +
-                        "Strandhogg attacks"
+                        "Strandhogg attacks",
+                fix().set().android().attribute(ATTR_TARGET_SDK_VERSION).value(PATCHED_SDK_LEVEL.toString()).build()
             )
 
-        context.report(incident, constraint = targetSdkLessThan(28))
+        context.report(incident, constraint = targetSdkLessThan(PATCHED_SDK_LEVEL))
     }
 
     companion object {
+        const val PATCHED_SDK_LEVEL = 28
+
         /** Issue describing the problem and pointing to the detector implementation. */
         @JvmField
         val ISSUE: Issue =
@@ -60,7 +74,7 @@ class StrandhoggDetector : Detector(), XmlScanner {
                 severity = Severity.WARNING,
                 moreInfo = "http://goo.gle/StrandhoggVulnerable",
                 implementation =
-                Implementation(StrandhoggDetector::class.java, Scope.JAVA_FILE_SCOPE)
+                Implementation(StrandhoggDetector::class.java, Scope.MANIFEST_SCOPE)
             )
     }
 }

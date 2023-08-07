@@ -28,7 +28,7 @@ dependencies {
 
 ## Lint checks included in this library
 
-*   `DefaultSecureConnectionsDetector` - detects when unsafe default settings
+*   `InsecureConnectionsDetector` - detects when unsafe default settings
     are applied to an app's network security config.
     *   `DefaultCleartextTraffic`: Suggests adding a network security config
         with `cleartextTrafficPermitted="false"`.
@@ -41,13 +41,13 @@ dependencies {
             config trusts user-added CA certificates. In practice, it is better
             to limit the set of trusted CAs so only trusted CAs are used for an
             app's secure connections.
-*   `TapjackingDefenseDetector` - Suggests adding the
+*   `TapjackingDetector` - Suggests adding the
     `filterTouchesWhenObscured` attribute to buttons and switches with
     `"enable"` in the view name.
     *   **Risk:** views without this attribute can be susceptible to tapjacking
         attacks by other apps obscuring the UI to trick the user into performing
         certain actions.
-*   `StrandhoggVulnerableDetector` - Suggests updating the target SDK version to
+*   `StrandhoggDetector` - Suggests updating the target SDK version to
     28 or above.
     *   **Risk:** Android previously had a design bug in task reparenting in
         earlier versions, which allowed malicious applications to hijack

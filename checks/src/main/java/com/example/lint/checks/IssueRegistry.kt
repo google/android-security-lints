@@ -22,8 +22,13 @@ import com.android.tools.lint.detector.api.CURRENT_API
 /*
  * The list of issues that will be checked when running <code>lint</code>.
  */
-class SampleIssueRegistry : IssueRegistry() {
-    override val issues = listOf(StrandhoggDetector.ISSUE)
+class IssueRegistry : IssueRegistry() {
+    override val issues = listOf(
+        StrandhoggDetector.ISSUE,
+        InsecureConnectionsDetector.CLEARTEXT_TRAFFIC,
+        InsecureConnectionsDetector.TRUSTED_USER_CERTS,
+        UnintendedDebugDetector.ISSUE
+    )
 
     override val api: Int
         get() = CURRENT_API
