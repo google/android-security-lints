@@ -25,8 +25,8 @@ import com.android.tools.lint.detector.api.CURRENT_API
 class IssueRegistry : IssueRegistry() {
     override val issues = listOf(
         StrandhoggDetector.ISSUE,
-        InsecureConnectionsDetector.CLEARTEXT_TRAFFIC,
-        InsecureConnectionsDetector.TRUSTED_USER_CERTS,
+        MissingNetworkSecurityConfigDetector.CLEARTEXT_TRAFFIC,
+        MissingNetworkSecurityConfigDetector.TRUSTED_USER_CERTS,
         UnintendedDebugDetector.ISSUE
     )
 

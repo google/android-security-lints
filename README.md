@@ -28,14 +28,14 @@ dependencies {
 
 ## Lint checks included in this library
 
-*   `InsecureConnectionsDetector` - detects when unsafe default settings
-    are applied to an app's network security config.
-    *   `DefaultCleartextTraffic`: Suggests adding a network security config
+*   `MissingNetworkSecurityConfigDetector` - detects when unsafe default network 
+    connection settings are applied to an application through older SDK versions.
+    *   Lint ID `DefaultCleartextTraffic`: Suggests adding a network security config
         with `cleartextTrafficPermitted="false"`.
         *   **Risk:** On API level 27 and below, the default network security
             config trusts cleartext traffic and needs to be explicitly opted out
             by the application to only use secure connections.
-    *   `DefaultTrustedUserCerts`: Prohibits any user certificates being trusted
+    *   Lint ID `DefaultTrustedUserCerts`: Prohibits any user certificates being trusted
         in the app's network security config.
         *   **Risk:** On API level 23 and below, the default network security
             config trusts user-added CA certificates. In practice, it is better
@@ -44,19 +44,27 @@ dependencies {
 *   `TapjackingDetector` - Suggests adding the
     `filterTouchesWhenObscured` attribute to buttons and switches with
     `"enable"` in the view name.
+    *   Lint ID: `TapjackingVulnerable`
     *   **Risk:** views without this attribute can be susceptible to tapjacking
         attacks by other apps obscuring the UI to trick the user into performing
         certain actions.
 *   `StrandhoggDetector` - Suggests updating the target SDK version to
     28 or above.
+    *   Lint ID: `StrandhoggVulnerable`
     *   **Risk:** Android previously had a design bug in task reparenting in
         earlier versions, which allowed malicious applications to hijack
         legitimate user actions and trick users into providing credentials to
         malicious apps.
-*   `UnintendedDebugDetector` - Prohibits an application from having the
-    `android:debuggable` attribute to `true`.
-    *   **Risk:** Attackers can debug the application, allowing them to gain
-        access to parts of the application that should be kept secure.
+*   `UnintendedExposedUrlDetector` - Prohibits an application from having unintentional
+    URLs exposed within XML files.
+    *   Lint ID: `UnintendedExposedUrl`
+        *   **Risk:** URLs that look intended for debugging and development 
+        purposes only are exposed in the application, allowing attackers to
+        gain access to parts of the application and server that should be kept secure.
+    *   Lint ID: `UnintendedPrivateIpAddress`
+        *   **Risk:** Private IP addresses are referenced that may have been 
+        intended only for debugging and development, and should not be exposed
+        publicly.
 *   `TelephonySecretCodeDetector` - Prohibits the use of
     `android.provider.Telephony.SECRET_CODE` within an intent filter / exported
     component.
