@@ -32,7 +32,7 @@ class UnintendedDebugDetector: Detector(), XmlScanner {
                     attribute,
                     context.getValueLocation(attribute),
                     "Setting the application's `android:debuggable` attribute to true exposes the application" +
-                            "to greater risk",
+                            " to greater risk",
                     fix().set().android().attribute(ATTR_DEBUGGABLE).value(VALUE_FALSE).build()
                 )
 

@@ -37,11 +37,13 @@ class StrandhoggDetector : Detector(), XmlScanner {
     override fun getApplicableElements() = setOf(TAG_USES_SDK)
 
     override fun visitElement(context: XmlContext, element: Element) {
+        val attribute = element.getAttributeNodeNS(ANDROID_URI, ATTR_TARGET_SDK_VERSION) ?: return
+
         val incident =
             Incident(
                 ISSUE,
                 element,
-                context.getValueLocation(element.getAttributeNodeNS(ANDROID_URI, ATTR_TARGET_SDK_VERSION)),
+                context.getValueLocation(attribute),
                 "Update your application's target SDK version to 28 and above to protect it from " +
                         "Strandhogg attacks",
                 fix().set().android().attribute(ATTR_TARGET_SDK_VERSION).value(PATCHED_SDK_LEVEL.toString()).build()
