@@ -24,6 +24,7 @@ import com.android.tools.lint.detector.api.CURRENT_API
  */
 class IssueRegistry : IssueRegistry() {
     override val issues = listOf(
+        BadCryptographyUsageDetector.VULNERABLE_ALGORITHM,
         StrandhoggDetector.ISSUE,
         TapjackingDetector.ISSUE,
         MissingNetworkSecurityConfigDetector.CLEARTEXT_TRAFFIC,
