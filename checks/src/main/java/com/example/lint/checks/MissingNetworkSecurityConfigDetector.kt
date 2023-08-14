@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2023 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.lint.checks
 
 import com.android.SdkConstants
@@ -35,7 +50,7 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
 
         val cleartextTrafficIncident =
             Incident(
-                CLEARTEXT_TRAFFIC,
+                CLEARTEXT_TRAFFIC_ISSUE,
                 element,
                 context.getElementLocation(element),
                 "On SDK versions below 28, the application by default trusts cleartext traffic. Add a " +
@@ -45,7 +60,7 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
 
         val userCertsIncident =
             Incident(
-                TRUSTED_USER_CERTS,
+                TRUSTED_USER_CERTS_ISSUE,
                 element,
                 context.getElementLocation(element),
                 "On SDK versions below 24, the application by default trusts user-added CA certificates. Add " +
@@ -105,7 +120,7 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
             Implementation(MissingNetworkSecurityConfigDetector::class.java, Scope.MANIFEST_SCOPE)
 
         @JvmField
-        val CLEARTEXT_TRAFFIC: Issue =
+        val CLEARTEXT_TRAFFIC_ISSUE: Issue =
             Issue.create(
                 id = "DefaultCleartextTraffic",
                 briefDescription = "Application by default permits cleartext traffic",
@@ -122,7 +137,7 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
             )
 
         @JvmField
-        val TRUSTED_USER_CERTS: Issue =
+        val TRUSTED_USER_CERTS_ISSUE: Issue =
             Issue.create(
                 id = "DefaultTrustedUserCerts",
                 briefDescription = "Application by default trusts user-added CA certificates",

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -126,7 +126,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenNoRelevantUiElement_doesNotShowWarning() {
+    fun testWhenNoRelevantUiElement_noWarning() {
         lint()
             .files(
             xml(
@@ -141,7 +141,8 @@ class TapjackingDetectorTest : LintDetectorTest() {
         ).run().expectClean()
     }
 
-    fun testWhenNoInterestingNamedUiElement_doesNotShowWarning() {
+    @Test
+    fun testWhenNoInterestingNamedUiElement_noWarning() {
         lint()
             .files(
                 xml(
@@ -149,7 +150,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
                     """
                     <?xml version="1.0" encoding="utf-8"?>
                     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android">
-                        <ToggleButton></ ToggleButton>
+                        <ToggleButton></ToggleButton>
                     </LinearLayout>
                     """.trimIndent()
                 ).indented()

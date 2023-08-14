@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
     override fun getIssues() = mutableListOf(
-        UnintendedExposedUrlDetector.EXPOSED_URL,
-        UnintendedExposedUrlDetector.PRIVATE_IP_ADDRESS
+        UnintendedExposedUrlDetector.EXPOSED_URL_ISSUE,
+        UnintendedExposedUrlDetector.PRIVATE_IP_ADDRESS_ISSUE
     )
 
     override fun getDetector(): Detector = UnintendedExposedUrlDetector()
@@ -188,7 +188,7 @@ class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenNoExposedUrlInXmlFile_doesNotShowWarning() {
+    fun testWhenNoExposedUrlInXmlFile_noWarning() {
         lint()
             .files(
             xml("res/xml/strings.xml",
@@ -205,7 +205,7 @@ class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenNoExposedUrlInNetworkConfigFile_doesNotShowWarning() {
+    fun testWhenNoExposedUrlInNetworkConfigFile_noWarning() {
         lint()
             .files(
                 xml("res/xml/network_security_config.xml",
@@ -225,7 +225,7 @@ class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenNoPrivateIpAddressInXmlFile_doesNotShowWarning() {
+    fun testWhenNoPrivateIpAddressInXmlFile_noWarning() {
         lint()
             .files(
                 xml("res/xml/strings.xml",
@@ -241,7 +241,7 @@ class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenNoPrivateIpAddressInNetworkConfigFile_doesNotShowWarning() {
+    fun testWhenNoPrivateIpAddressInNetworkConfigFile_noWarning() {
         lint()
             .files(
                 xml("res/xml/network_security_config.xml",

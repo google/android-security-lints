@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class MissingNetworkSecurityConfigDetectorTest : LintDetectorTest() {
     override fun getIssues() = mutableListOf(
-        MissingNetworkSecurityConfigDetector.CLEARTEXT_TRAFFIC,
-        MissingNetworkSecurityConfigDetector.TRUSTED_USER_CERTS
+        MissingNetworkSecurityConfigDetector.CLEARTEXT_TRAFFIC_ISSUE,
+        MissingNetworkSecurityConfigDetector.TRUSTED_USER_CERTS_ISSUE
     )
 
     override fun getDetector(): Detector = MissingNetworkSecurityConfigDetector()
