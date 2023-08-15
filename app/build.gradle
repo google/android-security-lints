@@ -24,7 +24,6 @@ android {
     defaultConfig {
         applicationId "com.android.example.lint_usage"
         minSdkVersion 21
-        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
@@ -46,3 +45,6 @@ android {
     }
 }
 
+dependencies {
+    lintChecks project(':checks')
+}
