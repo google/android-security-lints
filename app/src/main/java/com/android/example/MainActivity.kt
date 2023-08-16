@@ -16,6 +16,7 @@
 package com.android.example
 
 import android.app.Activity
+import java.lang.Math
 import javax.crypto.Cipher
 
 class MainActivity: Activity() {
@@ -23,5 +24,7 @@ class MainActivity: Activity() {
         Cipher.getInstance("RC4")
     }
 
-
+    private fun triggerWeakPrng() {
+        val random = Math.random() * 100
+    }
 }

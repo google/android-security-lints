@@ -32,7 +32,8 @@ class IssueRegistry : IssueRegistry() {
         UnintendedExposedUrlDetector.EXPOSED_URL_ISSUE,
         UnintendedExposedUrlDetector.PRIVATE_IP_ADDRESS_ISSUE,
         MisconfiguredFileProviderDetector.ROOT_PATH_ISSUE,
-        MisconfiguredFileProviderDetector.EXTERNAL_PATH_ISSUE
+        MisconfiguredFileProviderDetector.EXTERNAL_PATH_ISSUE,
+        WeakPrngDetector.ISSUE
     )
 
     override val api: Int

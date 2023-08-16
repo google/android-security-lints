@@ -35,9 +35,10 @@ dependencies {
 | `SensitiveExternalPath` | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Sensitive info like PII should not be stored outside of the application container or system credential storage facilities   |
 
 ### [MASVS-CRYPTO](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
-| Lint Issue ID               | Detector                                                                                                       | Risk                                                                                                               |
-|-----------------------------|----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| `VulnerableCryptoAlgorithm` | [`BadCryptographyUsageDetector`](checks/src/main/java/com/example/lint/checks/BadCryptographyUsageDetector.kt) | Using weak or broken cryptographic hash functions may allow an attacker to reasonably determine the original input |
+| Lint Issue ID               | Detector                                                                                                       | Risk                                                                                                                                       |
+|-----------------------------|----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `VulnerableCryptoAlgorithm` | [`BadCryptographyUsageDetector`](checks/src/main/java/com/example/lint/checks/BadCryptographyUsageDetector.kt) | Using weak or broken cryptographic hash functions may allow an attacker to reasonably determine the original input                         |
+| `WeakPrng`                  | [`WeakPrngDetector`](checks/src/main/java/com/example/lint/checks/WeakPrngDetector.kt)                         | Using non-cryptographically secure PRNGs in security contexts like authentication allows attackers to guess the randomly-generated numbers |
 
 ### [MASVS-NETWORK](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
 | Lint Issue ID             | Detector                                                                                                                       | Risk                                                                                                                                                                                                                     |
