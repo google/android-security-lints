@@ -26,12 +26,15 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class BadCryptographyUsageDetectorTest : LintDetectorTest() {
 
-    override fun getIssues() = listOf(BadCryptographyUsageDetector.VULNERABLE_ALGORITHM_ISSUE)
+    override fun getIssues() = listOf(
+        BadCryptographyUsageDetector.VULNERABLE_ALGORITHM_ISSUE,
+        BadCryptographyUsageDetector.UNSAFE_ALGORITHM_USAGE_ISSUE
+    )
 
     override fun getDetector(): Detector = BadCryptographyUsageDetector()
 
     @Test
-    fun testWhenVulnerableCryptoAlgoUsed_java_showsWarningAndQuickFix() {
+    fun testWhenVulnerableCryptoBlockAlgoUsed_showsErrorAndQuickFix() {
         lint()
             .files(
                 java(
@@ -42,7 +45,7 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                         
                         public class TestBadCryptoDetector {
                             private void foo() {
-                                String algo = "RC4";
+                                String algo = "RC2";
                                 Cipher.getInstance(algo);
                             }
                         }
@@ -50,10 +53,80 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                 )
             ).run().expect(
                 """
-                src/fake/pkg/TestBadCryptoDetector.java:8: Warning: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
+                src/fake/pkg/TestBadCryptoDetector.java:8: Error: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
                         Cipher.getInstance(algo);
                         ~~~~~~~~~~~~~~~~~~~~~~~~
-                0 errors, 1 warnings
+                1 errors, 0 warnings
+                """
+            ).expectFixDiffs("""
+                Fix for src/fake/pkg/TestBadCryptoDetector.java line 8: Replace with Cipher.getInstance("AES/GCM/NoPadding"):
+                @@ -8 +8
+                -         Cipher.getInstance(algo);
+                +         Cipher.getInstance("AES/GCM/NoPadding");
+            """.trimIndent())
+
+    }
+
+    @Test
+    fun testWhenVulnerableCryptoBlockAlgoUsedWithModeAndPadding_showsErrorAndQuickFix() {
+        lint()
+            .files(
+                kotlin(
+                    """
+                        package fake.pkg
+                        
+                        import javax.crypto.Cipher
+                        
+                        class TestBadCryptoDetector {
+                            private fun foo() {
+                                val algo = "Blowfish"
+                                val mode = "GCM"
+                                val padding = "NoPadding"
+                                Cipher.getInstance(algo + "/" + mode + "/" + padding)
+                            }
+                        }
+                    """.trimIndent()
+                )
+            ).run().expect(
+                """
+                src/fake/pkg/TestBadCryptoDetector.kt:10: Error: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
+                        Cipher.getInstance(algo + "/" + mode + "/" + padding)
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                1 errors, 0 warnings
+                """
+            ).expectFixDiffs("""
+            Fix for src/fake/pkg/TestBadCryptoDetector.kt line 10: Replace with Cipher.getInstance("AES/GCM/NoPadding"):
+            @@ -10 +10
+            -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
+            +         Cipher.getInstance("AES/GCM/NoPadding")
+            """.trimIndent())
+
+    }
+
+    @Test
+    fun testWhenVulnerableCryptoStreamAlgoUsed_showsErrorAndQuickFix() {
+        lint()
+            .files(
+                java(
+                    """
+                        package fake.pkg;
+                        
+                        import javax.crypto.Cipher;
+                        
+                        public class TestBadCryptoDetector {
+                            private void foo() {
+                                String algo = "ARCFOUR";
+                                Cipher.getInstance(algo);
+                            }
+                        }
+                    """.trimIndent()
+                )
+            ).run().expect(
+                """
+                src/fake/pkg/TestBadCryptoDetector.java:8: Error: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
+                        Cipher.getInstance(algo);
+                        ~~~~~~~~~~~~~~~~~~~~~~~~
+                1 errors, 0 warnings
                 """
             ).expectFixDiffs("""
                 Fix for src/fake/pkg/TestBadCryptoDetector.java line 8: Replace with Cipher.getInstance("ChaCha20"):
@@ -65,7 +138,80 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenVulnerableCryptoAlgoUsed_kotlin_showsWarningAndQuickFix() {
+    fun testWhenVulnerableCryptoStreamAlgoUsedWithModePadding_showsErrorAndQuickFix() {
+        lint()
+            .files(
+                java(
+                    """
+                        package fake.pkg;
+                        
+                        import javax.crypto.Cipher;
+                        
+                        public class TestBadCryptoDetector {
+                            private void foo() {
+                                String algo = "ARCFOUR";
+                                String mode = "CBC";
+                                String padding = "NoPadding";
+
+                                Cipher.getInstance(algo + "/" + mode + "/" + padding);
+                            }
+                        }
+                    """.trimIndent()
+                )
+            ).run().expect(
+                """
+                src/fake/pkg/TestBadCryptoDetector.java:11: Error: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
+                        Cipher.getInstance(algo + "/" + mode + "/" + padding);
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                1 errors, 0 warnings
+                """
+            ).expectFixDiffs("""
+                Fix for src/fake/pkg/TestBadCryptoDetector.java line 11: Replace with Cipher.getInstance("ChaCha20"):
+                @@ -11 +11
+                -         Cipher.getInstance(algo + "/" + mode + "/" + padding);
+                +         Cipher.getInstance("ChaCha20");
+            """.trimIndent())
+
+    }
+
+    @Test
+    fun testWhenUnsafeAlgoUsageCbcNoPadding_showsErrorAndQuickFix() {
+        lint()
+            .files(
+                kotlin(
+                    """
+                        package fake.pkg
+                        
+                        import javax.crypto.Cipher
+                        
+                        class TestBadCryptoDetector {
+                            private fun foo() {
+                                val algo = "RSA"
+                                val mode = "CBC"
+                                val padding = "NoPadding"
+                                // There are problems with variables not being recognized with a string template
+                                Cipher.getInstance(algo + "/" + mode + "/" + padding)
+                            }
+                        }
+                    """.trimIndent()
+                )
+            ).run().expect(
+                """
+                    src/fake/pkg/TestBadCryptoDetector.kt:11: Error: Using insecure modes and paddings with cryptographic algorithms is unsafe and vulnerable to attacks [UnsafeCryptoAlgorithmUsage]
+                            Cipher.getInstance(algo + "/" + mode + "/" + padding)
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    1 errors, 0 warnings
+                    """
+            ).expectFixDiffs("""
+            Fix for src/fake/pkg/TestBadCryptoDetector.kt line 11: Replace with Cipher.getInstance("RSA/GCM/NoPadding"):
+            @@ -11 +11
+            -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
+            +         Cipher.getInstance("RSA/GCM/NoPadding")
+            """.trimIndent())
+    }
+
+    @Test
+    fun testWhenUnsafeAlgoUsageCbcOtherPadding_showsWarningAndQuickFix() {
         lint()
             .files(
                 kotlin(
@@ -87,42 +233,21 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                 )
             ).run().expect(
                 """
-                    src/fake/pkg/TestBadCryptoDetector.kt:11: Warning: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
+                    src/fake/pkg/TestBadCryptoDetector.kt:11: Warning: Using insecure modes and paddings with cryptographic algorithms is unsafe and vulnerable to attacks [UnsafeCryptoAlgorithmUsage]
                             Cipher.getInstance(algo + "/" + mode + "/" + padding)
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     0 errors, 1 warnings
                     """
             ).expectFixDiffs("""
-                Fix for src/fake/pkg/TestBadCryptoDetector.kt line 11: Replace with Cipher.getInstance("ChaCha20"):
-                @@ -11 +11
-                -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
-                +         Cipher.getInstance("ChaCha20")
+            Fix for src/fake/pkg/TestBadCryptoDetector.kt line 11: Replace with Cipher.getInstance("AES/GCM/NoPadding"):
+            @@ -11 +11
+            -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
+            +         Cipher.getInstance("AES/GCM/NoPadding")
             """.trimIndent())
     }
 
     @Test
-    fun testWhenNoVulnerableCryptoAlgoUsed_java_noWarning() {
-        lint()
-            .files(
-                java(
-                    """
-                        package fake.pkg;
-                        
-                        import javax.crypto.Cipher;
-                        
-                        public class TestBadCryptoDetector {
-                            private void foo() {
-                                String algo = "RSA";
-                                Cipher.getInstance(algo);
-                            }
-                        }
-                    """.trimIndent()
-                )
-            ).run().expectClean()
-    }
-
-    @Test
-    fun testWhenNoVulnerableCryptoAlgoUsed_kotlin_noWarning() {
+    fun testWhenUnsafeAlgoUsageRsaPkcs1Padding_showsWarningAndQuickFix() {
         lint()
             .files(
                 kotlin(
@@ -133,7 +258,64 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                         
                         class TestBadCryptoDetector {
                             private fun foo() {
-                                val algo = "ChaCha20"
+                                val algo = "RSA"
+                                val mode = "CBC"
+                                val padding = "PKCS1Padding"
+                                // There are problems with variables not being recognized with a string template
+                                Cipher.getInstance(algo + "/" + mode + "/" + padding)
+                            }
+                        }
+                    """.trimIndent()
+                )
+            ).run().expect(
+                """
+                    src/fake/pkg/TestBadCryptoDetector.kt:11: Warning: Using insecure modes and paddings with cryptographic algorithms is unsafe and vulnerable to attacks [UnsafeCryptoAlgorithmUsage]
+                            Cipher.getInstance(algo + "/" + mode + "/" + padding)
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    0 errors, 1 warnings
+                    """
+            ).expectFixDiffs("""
+            Fix for src/fake/pkg/TestBadCryptoDetector.kt line 11: Replace with Cipher.getInstance("RSA/CBC/OAEPWithSHA-256AndMGF1Padding"):
+            @@ -11 +11
+            -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
+            +         Cipher.getInstance("RSA/CBC/OAEPWithSHA-256AndMGF1Padding")
+            """.trimIndent())
+    }
+
+    @Test
+    fun testWhenNoVulnerableCryptoAlgoUsed_noWarning() {
+        lint()
+            .files(
+                java(
+                    """
+                        package fake.pkg;
+                        
+                        import javax.crypto.Cipher;
+                        
+                        public class TestBadCryptoDetector {
+                            private void foo() {
+                                String algo = "ChaCha20";
+                                Cipher.getInstance(algo);
+                            }
+                        }
+                    """.trimIndent()
+                )
+            ).run().expectClean()
+    }
+
+    @Test
+    fun testWhenNoUnsafeAlgoUsed_noWarning() {
+        lint()
+            .files(
+                kotlin(
+                    """
+                        package fake.pkg
+                        
+                        import javax.crypto.Cipher
+                        
+                        class TestBadCryptoDetector {
+                            private fun foo() {
+                                val algo = "RSA/CBC/OAEPWithSHA-256AndMGF1Padding"
                                 Cipher.getInstance(algo)
                             }
                         }

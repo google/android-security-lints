@@ -24,6 +24,14 @@ class MainActivity: Activity() {
         Cipher.getInstance("RC4")
     }
 
+    private fun triggerUnsafeCryptoAlgorithmUsage() {
+        val algo = "AES"
+        val mode = "CBC"
+        val padding = "PKCS1Padding"
+
+        Cipher.getInstance("$algo/$mode/$padding")
+    }
+
     private fun triggerWeakPrng() {
         val random = Math.random() * 100
     }
