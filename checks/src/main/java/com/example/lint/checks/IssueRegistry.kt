@@ -34,7 +34,8 @@ class IssueRegistry : IssueRegistry() {
         UnintendedExposedUrlDetector.PRIVATE_IP_ADDRESS_ISSUE,
         MisconfiguredFileProviderDetector.ROOT_PATH_ISSUE,
         MisconfiguredFileProviderDetector.EXTERNAL_PATH_ISSUE,
-        WeakPrngDetector.ISSUE
+        WeakPrngDetector.ISSUE,
+        SafeBrowsingDetector.MANIFEST_ISSUE
     )
 
     override val api: Int
@@ -47,7 +48,7 @@ class IssueRegistry : IssueRegistry() {
     // older, just remove this property.
     override val vendor: Vendor =
         Vendor(
-            vendorName = "Google - Android Vulnerability Research",
+            vendorName = "Google - Android 3P Vulnerability Research",
             feedbackUrl = "https://github.com/googlestaging/android-security-lints/issues",
             contact = "https://github.com/googlestaging/android-security-lints"
         )

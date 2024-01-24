@@ -18,6 +18,7 @@
     package="com.android.example">
     <uses-sdk android:targetSdkVersion="27"/>
     <application>
+        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
         <activity android:name="com.android.example.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
