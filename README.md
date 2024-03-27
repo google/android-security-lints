@@ -18,14 +18,15 @@ This library uses the Apache license, as is Google's default.
 ## How to use this library
 
 1.  Clone it from GitHub.
-1.  Add the `checks` module to your app's `build.gradle` file:
+2.  Add the `checks` module to your app's `build.gradle` file:
 
 ```shell
 dependencies {
   lintChecks project(':checks')
 }
 ```
-1.  Add `lintVersion` to the overall project's `build.gradle` file in the `ext` section. See [here](build.gradle) for an example:
+
+3.  Add `lintVersion` to the overall project's `build.gradle` file in the `ext` section. See [here](build.gradle) for an example:
 ```shell
 ext {
   ...
