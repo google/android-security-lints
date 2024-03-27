@@ -25,6 +25,13 @@ dependencies {
   lintChecks project(':checks')
 }
 ```
+1.  Add `lintVersion` to the overall project's `build.gradle` file in the `ext` section. See [here](build.gradle) for an example:
+```shell
+ext {
+  ...
+  lintVersion = '31.0.2'
+}
+```
 
 ## Lint checks included in this library
 
