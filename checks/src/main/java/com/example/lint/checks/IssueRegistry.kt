@@ -27,6 +27,7 @@ class IssueRegistry : IssueRegistry() {
         BadCryptographyUsageDetector.VULNERABLE_ALGORITHM_ISSUE,
         BadCryptographyUsageDetector.UNSAFE_ALGORITHM_USAGE_ISSUE,
         CustomSchemeDetector.AUTOVERIFY_ATTRIBUTE_ISSUE,
+        DnsConfigDetector.SDK_LEVEL_ISSUE,
         StrandhoggDetector.ISSUE,
         TapjackingDetector.ISSUE,
         MissingNetworkSecurityConfigDetector.CLEARTEXT_TRAFFIC_ISSUE,
