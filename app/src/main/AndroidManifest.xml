@@ -17,6 +17,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.example">
     <uses-sdk android:targetSdkVersion="27"/>
+    <permission android:name="com.android.example.permission.CUSTOM_PERMISSION"
+                android:protectionLevel="normal"/>
     <application>
         <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
         <activity android:name="com.android.example.MainActivity">

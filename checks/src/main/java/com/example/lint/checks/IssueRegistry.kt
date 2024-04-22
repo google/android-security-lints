@@ -37,7 +37,8 @@ class IssueRegistry : IssueRegistry() {
         MisconfiguredFileProviderDetector.ROOT_PATH_ISSUE,
         MisconfiguredFileProviderDetector.EXTERNAL_PATH_ISSUE,
         WeakPrngDetector.ISSUE,
-        SafeBrowsingDetector.MANIFEST_ISSUE
+        SafeBrowsingDetector.MANIFEST_ISSUE,
+        PermissionDetector.PROTECTION_LEVEL_ISSUE,
     )
 
     override val api: Int
