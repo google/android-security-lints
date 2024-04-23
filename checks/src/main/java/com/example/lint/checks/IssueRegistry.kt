@@ -52,7 +52,7 @@ class IssueRegistry : IssueRegistry() {
     override val vendor: Vendor =
         Vendor(
             vendorName = "Google - Android 3P Vulnerability Research",
-            feedbackUrl = "https://github.com/googlestaging/android-security-lints/issues",
-            contact = "https://github.com/googlestaging/android-security-lints"
+            feedbackUrl = "https://github.com/google/android-security-lints/issues",
+            contact = "https://github.com/google/android-security-lints"
         )
 }
