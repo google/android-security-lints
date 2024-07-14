@@ -30,7 +30,7 @@ dependencies {
     compileOnly "com.android.tools.lint:lint-api:$lintVersion"
     // You typically don't need this one:
     compileOnly "com.android.tools.lint:lint-checks:$lintVersion"
-    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.android.tools.lint:lint:$lintVersion"

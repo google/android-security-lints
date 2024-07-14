@@ -39,7 +39,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
                         <Switch android:id='enable_setting'>
                         </Switch>
                     </LinearLayout>
-                    """.trimIndent()
+                    """
             ).indented()
         ).run().expect(
             """
@@ -63,7 +63,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
                         android:id='disable_setting'>
                         </CheckBox>
                     </LinearLayout>
-                    """.trimIndent()
+                    """
             ).indented()
         ).run().expect(
             """
@@ -86,7 +86,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
                         <ToggleButton android:id='enable_setting'>
                         </ToggleButton>
                     </LinearLayout>
-                    """.trimIndent()
+                    """
             ).indented()
         ).run().expectFixDiffs(
             """
@@ -111,7 +111,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
                         <CompoundButton android:id='disable_setting'>
                         </CompoundButton>
                     </LinearLayout>
-                    """.trimIndent()
+                    """
             ).indented()
         ).run().expectFixDiffs(
             """
@@ -136,7 +136,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
                     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android">
                         <Button />
                     </LinearLayout>
-                    """.trimIndent()
+                    """
             ).indented()
         ).run().expectClean()
     }
@@ -152,7 +152,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
                     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android">
                         <ToggleButton></ToggleButton>
                     </LinearLayout>
-                    """.trimIndent()
+                    """
                 ).indented()
             ).run().expectClean()
     }

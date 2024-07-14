@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.lint.checks;
+package com.example.lint.checks
 
 import com.android.tools.lint.checks.infrastructure.LintDetectorTest
 import com.android.tools.lint.detector.api.Detector
@@ -49,8 +49,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo);
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                 src/fake/pkg/TestBadCryptoDetector.java:8: Error: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
@@ -63,7 +63,7 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                 @@ -8 +8
                 -         Cipher.getInstance(algo);
                 +         Cipher.getInstance("AES/GCM/NoPadding");
-            """.trimIndent())
+            """)
 
     }
 
@@ -85,8 +85,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo + "/" + mode + "/" + padding)
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                 src/fake/pkg/TestBadCryptoDetector.kt:10: Error: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
@@ -99,7 +99,7 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
             @@ -10 +10
             -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
             +         Cipher.getInstance("AES/GCM/NoPadding")
-            """.trimIndent())
+            """)
 
     }
 
@@ -119,8 +119,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo);
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                 src/fake/pkg/TestBadCryptoDetector.java:8: Error: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
@@ -133,7 +133,7 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                 @@ -8 +8
                 -         Cipher.getInstance(algo);
                 +         Cipher.getInstance("ChaCha20");
-            """.trimIndent())
+            """)
 
     }
 
@@ -156,8 +156,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo + "/" + mode + "/" + padding);
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                 src/fake/pkg/TestBadCryptoDetector.java:11: Error: Using vulnerable cryptographic algorithms puts the original input at risk of discovery [VulnerableCryptoAlgorithm]
@@ -170,7 +170,7 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                 @@ -11 +11
                 -         Cipher.getInstance(algo + "/" + mode + "/" + padding);
                 +         Cipher.getInstance("ChaCha20");
-            """.trimIndent())
+            """)
 
     }
 
@@ -193,8 +193,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo + "/" + mode + "/" + padding)
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                     src/fake/pkg/TestBadCryptoDetector.kt:11: Error: Using insecure modes and paddings with cryptographic algorithms is unsafe and vulnerable to attacks [UnsafeCryptoAlgorithmUsage]
@@ -207,7 +207,7 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
             @@ -11 +11
             -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
             +         Cipher.getInstance("RSA/GCM/NoPadding")
-            """.trimIndent())
+            """)
     }
 
     @Test
@@ -229,8 +229,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo + "/" + mode + "/" + padding)
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                     src/fake/pkg/TestBadCryptoDetector.kt:11: Warning: Using insecure modes and paddings with cryptographic algorithms is unsafe and vulnerable to attacks [UnsafeCryptoAlgorithmUsage]
@@ -243,7 +243,7 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
             @@ -11 +11
             -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
             +         Cipher.getInstance("AES/GCM/NoPadding")
-            """.trimIndent())
+            """)
     }
 
     @Test
@@ -265,8 +265,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo + "/" + mode + "/" + padding)
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                     src/fake/pkg/TestBadCryptoDetector.kt:11: Warning: Using insecure modes and paddings with cryptographic algorithms is unsafe and vulnerable to attacks [UnsafeCryptoAlgorithmUsage]
@@ -279,7 +279,7 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
             @@ -11 +11
             -         Cipher.getInstance(algo + "/" + mode + "/" + padding)
             +         Cipher.getInstance("RSA/CBC/OAEPWithSHA-256AndMGF1Padding")
-            """.trimIndent())
+            """)
     }
 
     @Test
@@ -298,8 +298,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo);
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expectClean()
     }
 
@@ -319,8 +319,8 @@ class BadCryptographyUsageDetectorTest : LintDetectorTest() {
                                 Cipher.getInstance(algo)
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expectClean()
 
     }

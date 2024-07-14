@@ -142,7 +142,7 @@ class BadCryptographyUsageDetector: Detector(), SourceCodeScanner {
                 briefDescription = "Application uses vulnerable cryptography algorithms",
                 explanation =
                 """
-                    Using weak or broken cryptographic hash functions may allow an attacker to reasonably determine
+                    Using weak or broken cryptographic hash functions may allow an attacker to reasonably determine \
                     the original input or produce multiple inputs with the same hash value.
                     """,
                 category = Category.SECURITY,
@@ -159,7 +159,7 @@ class BadCryptographyUsageDetector: Detector(), SourceCodeScanner {
                 briefDescription = "Application uses unsafe cipher modes or paddings with cryptographic algorithms",
                 explanation =
                     """
-                        Using unsafe cipher modes or paddings with safe cryptographic algorithms is insecure, and 
+                        Using unsafe cipher modes or paddings with safe cryptographic algorithms is insecure, and \
                         makes the code vulnerable to issues like padding oracle attacks.
                     """,
                 category = Category.SECURITY,

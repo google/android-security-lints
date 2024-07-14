@@ -68,7 +68,7 @@ class DnsConfigDetector : Detector(), XmlScanner {
                 // `monospace`, *italic*, and **bold**.
                 explanation =
                 """
-                    Apps targeting SDK versions earlier than 28 are susceptible to DNS attacks like DNS spoofing or 
+                    Apps targeting SDK versions earlier than 28 are susceptible to DNS attacks like DNS spoofing or \
                     cache poisoning
                     """, // no need to .trimIndent(), lint does that automatically
                 category = Category.SECURITY,

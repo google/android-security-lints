@@ -50,12 +50,13 @@ class MisconfiguredFileProviderDetectorTest : LintDetectorTest() {
                                            <root-path name="root" path="/"/>
                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     0 errors, 1 warnings
-                """.trimIndent()
+                """
             ).expectFixDiffs("""
                 Fix for res/xml/file_paths.xml line 5: Delete:
                 @@ -5 +5
                 -                        <root-path name="root" path="/"/>
-            """.trimIndent())
+            """
+            )
     }
 
     @Test
@@ -77,12 +78,12 @@ class MisconfiguredFileProviderDetectorTest : LintDetectorTest() {
                                            <external-path name="external_path" path="sdcard/"/>
                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     0 errors, 1 warnings
-                """.trimIndent()
+                """
             ).expectFixDiffs("""
                 Fix for res/xml/file_paths.xml line 5: Delete:
                 @@ -5 +5
                 -                        <external-path name="external_path" path="sdcard/"/>
-            """.trimIndent())
+            """)
     }
 
     @Test

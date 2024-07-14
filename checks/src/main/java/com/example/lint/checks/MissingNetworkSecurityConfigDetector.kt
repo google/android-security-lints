@@ -87,7 +87,7 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
         if (file.exists()) return null
 
         val createConfigFileFix = fix().newFile(file, config).build()
-        return fix().composite(addConfigToManifestFix, createConfigFileFix)
+        return fix().name("Create network security config").composite(addConfigToManifestFix, createConfigFileFix)
     }
 
     companion object {
@@ -126,7 +126,7 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
                 briefDescription = "Application by default permits cleartext traffic",
                 explanation =
                 """
-            Apps targeting SDK versions earlier than 28 trust cleartext traffic by default. 
+            Apps targeting SDK versions earlier than 28 trust cleartext traffic by default. \
             The application must explicitly opt out of this in order to only use secure connections.
             """,
                 category = Category.SECURITY,
@@ -143,10 +143,10 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
                 briefDescription = "Application by default trusts user-added CA certificates",
                 explanation =
                 """
-        Apps targeting SDK versions earlier than 24 trust user-added CA certificates by default. 
-        In practice, it is better to limit the set of trusted CAs so only trusted CAs are used for an app's secure 
-        connections.
-        """,
+                Apps targeting SDK versions earlier than 24 trust user-added CA certificates by default. \
+                In practice, it is better to limit the set of trusted CAs so only trusted CAs are used for an app's secure \
+                connections.
+                """,
                 category = Category.SECURITY,
                 priority = 3,
                 severity = Severity.WARNING,

@@ -15,7 +15,6 @@
  */
 package com.example.lint.checks
 
-import com.android.SdkConstants
 import com.android.resources.ResourceFolderType
 import com.android.tools.lint.detector.api.Category
 import com.android.tools.lint.detector.api.Implementation
@@ -91,7 +90,7 @@ class MisconfiguredFileProviderDetector: ResourceXmlDetector() {
                 briefDescription = "Application specifies the device root directory ",
                 explanation =
                 """
-                    Allowing the device root directory in the `FileProvider` configuration provides arbitrary access
+                    Allowing the device root directory in the `FileProvider` configuration provides arbitrary access \
                     to files and folders for attackers, thereby increasing the attack surface.
                     """,
                 category = Category.SECURITY,
@@ -108,7 +107,7 @@ class MisconfiguredFileProviderDetector: ResourceXmlDetector() {
                 briefDescription = "Application may expose sensitive info like PII by storing it in external storage",
                 explanation =
                 """
-                    Sensitive information like PII should not be stored outside of the application container or system
+                    Sensitive information like PII should not be stored outside of the application container or system \
                     credential storage facilities
                     """,
                 category = Category.SECURITY,
