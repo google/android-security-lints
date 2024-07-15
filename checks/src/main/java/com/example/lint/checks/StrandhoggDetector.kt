@@ -68,7 +68,7 @@ class StrandhoggDetector : Detector(), XmlScanner {
                 // `monospace`, *italic*, and **bold**.
                 explanation =
                 """
-                    Apps targeting SDK versions earlier than 28 are susceptible to Strandhogg / 
+                    Apps targeting SDK versions earlier than 28 are susceptible to Strandhogg / \
                     Task Affinity attacks.
                     """, // no need to .trimIndent(), lint does that automatically
                 category = Category.SECURITY,

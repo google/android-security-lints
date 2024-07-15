@@ -59,8 +59,8 @@ class TapjackingDetector : ResourceXmlDetector() {
 
     companion object {
         const val ATTR_FILTER_TOUCHES_OBSCURED = "filterTouchesWhenObscured"
-        val ENABLE_NAME = "enable"
-        val DISABLE_NAME = "disable"
+        const val ENABLE_NAME = "enable"
+        const val DISABLE_NAME = "disable"
 
         @JvmField
         val ISSUE: Issue =
@@ -69,7 +69,7 @@ class TapjackingDetector : ResourceXmlDetector() {
                 briefDescription = "Application's UI is vulnerable to tapjacking attacks",
                 explanation =
                 """
-                    Apps with sensitive UI elements should add the `filterTouchesWithObscured` attribute
+                    Apps with sensitive UI elements should add the `filterTouchesWithObscured` attribute \
                     to protect it from tapjacking / overlay attacks.
                     """,
                 category = Category.SECURITY,

@@ -58,8 +58,8 @@ class SafeBrowsingDetector : Detector(), XmlScanner {
         private const val ENABLE_SAFE_BROWSING_MANIFEST_VALUE = "android.webkit.WebView.EnableSafeBrowsing"
 
         private const val EXPLANATION = """
-        Safe Browsing is a service to help applications check URLs against a known list of unsafe web 
-        resources. We recommend keeping Safe Browsing enabled at all times and designing your app around 
+        Safe Browsing is a service to help applications check URLs against a known list of unsafe web \
+        resources. We recommend keeping Safe Browsing enabled at all times and designing your app around \
         any constraints this causes.
         """
 

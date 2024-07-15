@@ -57,9 +57,9 @@ class PermissionDetector : Detector(), XmlScanner {
         private val INSECURE_PROTECTION_LEVELS = setOf("normal")
 
         private const val EXPLANATION = """
-        Custom permissions are designed for sharing resources and capabilities with other apps. However, typos and
-        insufficient protection levels can negate the usage of these custom permissions altogether. In general, use
-        `signature` or higher protection levels whenever possible, as this ensures only other apps signed with the
+        Custom permissions are designed for sharing resources and capabilities with other apps. However, typos and \
+        insufficient protection levels can negate the usage of these custom permissions altogether. In general, use \
+        `signature` or higher protection levels whenever possible, as this ensures only other apps signed with the \
         same certificate can access these protected features.
         """
 

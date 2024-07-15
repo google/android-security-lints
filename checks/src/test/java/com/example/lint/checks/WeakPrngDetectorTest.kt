@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.lint.checks;
+package com.example.lint.checks
 
 import com.android.tools.lint.checks.infrastructure.LintDetectorTest
 import com.android.tools.lint.detector.api.Detector
@@ -45,8 +45,8 @@ class WeakPrngDetectorTest : LintDetectorTest() {
                                 int random = Math.random() * 100;
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                 src/fake/pkg/TestWeakPrngDetector.java:7: Warning: Math.random relies on a weak PRNG, use java.util.Random for non-security contexts and java.security.SecureRandom for security / authentication purposes [WeakPrng]
@@ -61,7 +61,7 @@ class WeakPrngDetectorTest : LintDetectorTest() {
             @@ -7 +8
             -         int random = Math.random() * 100;
             +         int random = Random().nextDouble() * 100;
-            """.trimIndent())
+            """)
 
     }
 
@@ -81,8 +81,8 @@ class WeakPrngDetectorTest : LintDetectorTest() {
                                 val randomDouble = random.nextDouble()
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expect(
                 """
                     src/fake/pkg/TestWeakPrngDetector.kt:7: Warning: java.util.Random should only be used for non-security contexts as it is not a cryptographically secure PRNG [WeakPrng]
@@ -97,7 +97,7 @@ class WeakPrngDetectorTest : LintDetectorTest() {
             @@ -7 +8
             -         val random = Random()
             +         val random = SecureRandom()
-            """.trimIndent())
+            """)
     }
 
     @Test
@@ -115,8 +115,8 @@ class WeakPrngDetectorTest : LintDetectorTest() {
                                 int randomInt = SecureRandom().nextInt(1000);
                             }
                         }
-                    """.trimIndent()
-                )
+                    """
+                ).indented()
             ).run().expectClean()
     }
 }

@@ -16,7 +16,6 @@
 package com.example.lint.checks
 
 import com.android.tools.lint.detector.api.Category
-import com.android.tools.lint.detector.api.ConstantEvaluator
 import com.android.tools.lint.detector.api.Detector
 import com.android.tools.lint.detector.api.Implementation
 import com.android.tools.lint.detector.api.Incident
@@ -83,8 +82,8 @@ class WeakPrngDetector: Detector(), SourceCodeScanner {
                 briefDescription = "Application uses non-cryptographically secure pseudorandom number generators",
                 explanation =
                 """
-                    If a non-cryptographically secure pseudorandom number generator (PRNG) is used in a security context
-                    like authentication, an attacker may be able to guess the randomly-generated numbers and gain access
+                    If a non-cryptographically secure pseudorandom number generator (PRNG) is used in a security context \
+                    like authentication, an attacker may be able to guess the randomly-generated numbers and gain access \
                     to privileged data or functionality.
                     """,
                 category = Category.SECURITY,

@@ -17,7 +17,6 @@ package com.example.lint.checks
 
 import com.android.SdkConstants.ANDROID_URI
 import com.android.SdkConstants.ATTR_AUTO_VERIFY
-import com.android.SdkConstants.ATTR_SCHEME
 import com.android.SdkConstants.TAG_DATA
 import com.android.SdkConstants.TAG_INTENT_FILTER
 import com.android.tools.lint.detector.api.Category
@@ -79,7 +78,7 @@ class CustomSchemeDetector : Detector(), XmlScanner {
         private val REGULAR_SCHEMES = listOf("http", "https", "file", "ftp", "ftps")
 
         private const val EXPLANATION = """
-        Intent filters should contain the `autoVerify` attribute and explicitly set it to true, in order
+        Intent filters should contain the `autoVerify` attribute and explicitly set it to true, in order \
         to signal to the system to automatically verify the associated hosts in your app's intent filters.
         """
 

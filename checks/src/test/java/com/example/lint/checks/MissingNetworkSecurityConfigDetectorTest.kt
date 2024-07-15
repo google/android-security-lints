@@ -16,6 +16,7 @@
 package com.example.lint.checks
 
 import com.android.tools.lint.checks.infrastructure.LintDetectorTest
+import com.android.tools.lint.checks.infrastructure.TestFile
 import com.android.tools.lint.detector.api.Detector
 
 import org.junit.Test
@@ -124,7 +125,7 @@ class MissingNetworkSecurityConfigDetectorTest : LintDetectorTest() {
             emptyXmlFile
         ).run().expectFixDiffs(
             """
-                    Fix for AndroidManifest.xml line 3: Set networkSecurityConfig="@xml/network_security_config":
+                    Fix for AndroidManifest.xml line 3: Create network security config:
                     @@ -7 +7
                     -     <application>
                     +     <application android:networkSecurityConfig="@xml/network_security_config" >
@@ -154,7 +155,7 @@ class MissingNetworkSecurityConfigDetectorTest : LintDetectorTest() {
             emptyXmlFile
         ).run().expectFixDiffs(
             """
-                    Fix for AndroidManifest.xml line 3: Set networkSecurityConfig="@xml/network_security_config":
+                    Fix for AndroidManifest.xml line 3: Create network security config:
                     @@ -7 +7
                     -     <application>
                     +     <application android:networkSecurityConfig="@xml/network_security_config" >
@@ -175,11 +176,11 @@ class MissingNetworkSecurityConfigDetectorTest : LintDetectorTest() {
     companion object {
         // It's necessary to add an empty XML File in order for the unit test to recognize that a resources folder
         // exists
-        val emptyXmlFile = xml(
+        val emptyXmlFile: TestFile = xml(
             "res/xml/strings.xml",
             """
                 <strings></strings>
                 """
-        )
+        ).indented()
     }
 }

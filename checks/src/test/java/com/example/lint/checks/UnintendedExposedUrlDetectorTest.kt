@@ -60,7 +60,7 @@ class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
                                                 <domain>8.0.0.28</domain>
                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~
                     0 errors, 3 warnings
-                """.trimIndent()
+                """
             ).expectFixDiffs("Fix for res/xml/network_security_config.xml line 6: Delete:\n" +
                     "@@ -6 +6\n" +
                     "-                             <domain>http://102.1.0.4/hello</domain>\n" +
@@ -97,7 +97,7 @@ class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
                                             <string name='test3'>8.0.0.28</string>
                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     0 errors, 3 warnings
-                """.trimIndent()
+                """
             ).expectFixDiffs("Fix for res/xml/strings.xml line 3: Delete:\n" +
                     "@@ -3 +3\n" +
                     "-                         <string name='test'>http://102.1.0.4/hello</string>\n" +
@@ -138,7 +138,7 @@ class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
                                                 <domain>debug.io</domain>
                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~
                     0 errors, 3 warnings
-                """.trimIndent()
+                """
             ).expectFixDiffs("Fix for res/xml/network_security_config.xml line 6: Delete:\n" +
                     "@@ -6 +6\n" +
                     "-                             <domain>http://staging-app.com</domain>\n" +
@@ -175,7 +175,7 @@ class UnintendedExposedUrlDetectorTest : LintDetectorTest() {
                                             <string name='test3'>debug.io</string>
                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     0 errors, 3 warnings
-                """.trimIndent()
+                """
             ).expectFixDiffs("Fix for res/xml/strings.xml line 3: Delete:\n" +
                     "@@ -3 +3\n" +
                     "-                         <string name='test'>http://staging-app.com</string>\n" +

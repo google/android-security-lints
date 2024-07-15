@@ -1,0 +1,7 @@
+.idea
+.gradle
+app/build
+build
+checks/build
+checks/lint-report.html
+local.properties

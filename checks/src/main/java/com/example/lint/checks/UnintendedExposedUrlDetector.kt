@@ -73,7 +73,7 @@ class UnintendedExposedUrlDetector: ResourceXmlDetector() {
         if (!IPV4_REGEX.containsMatchIn(value)) return
 
         val ipAddress = IPV4_REGEX.find(value)
-        val isPublicIp = PUBLIC_IP_PREFIXES.mapNotNull {
+        val isPublicIp = PUBLIC_IP_PREFIXES.map {
             ipAddress?.value?.split(".")?.get(0) == it.toString() }.any {it}
 
         val incident =
@@ -127,7 +127,7 @@ class UnintendedExposedUrlDetector: ResourceXmlDetector() {
                 briefDescription = "Application may have a debugging or development URL publicly exposed",
                 explanation =
                 """
-                    URLs that look intended for debugging and development purposes only are exposed in the application,
+                    URLs that look intended for debugging and development purposes only are exposed in the application, \
                     allowing attackers to gain access to parts of the application and server that should be kept secure.
                     """,
                 category = Category.SECURITY,
@@ -144,8 +144,8 @@ class UnintendedExposedUrlDetector: ResourceXmlDetector() {
                 briefDescription = "Application may have a private IP address publicly exposed",
                 explanation =
                 """
-                    Private IP addresses are referenced that may have been intended only for debugging and development.
-                    These should not be exposed publicly, as it may permit attackers to gain unintended access to the
+                    Private IP addresses are referenced that may have been intended only for debugging and development. \
+                    These should not be exposed publicly, as it may permit attackers to gain unintended access to the \
                     application and its resources.
                     """,
                 category = Category.SECURITY,

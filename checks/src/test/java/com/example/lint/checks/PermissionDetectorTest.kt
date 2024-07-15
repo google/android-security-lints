@@ -92,10 +92,10 @@ class PermissionDetectorTest : LintDetectorTest() {
             ).indented()
         ).run().expect(
             """
-                    AndroidManifest.xml:2: Warning: Custom permissions should have signature `protectionLevel`s or higher [InsecurePermissionProtectionLevel]
-                    <permission android:name="com.android.example.permission.CUSTOM_PERMISSION" />
-                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                    0 errors, 1 warnings
+            AndroidManifest.xml:2: Warning: Custom permissions should have a signature protectionLevel or higher [InsecurePermissionProtectionLevel]
+            <permission android:name="com.android.example.permission.CUSTOM_PERMISSION" />
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            0 errors, 1 warnings
                     """
         )
     }
@@ -115,11 +115,11 @@ class PermissionDetectorTest : LintDetectorTest() {
             ).indented()
         ).run().expect(
                 """
-                    AndroidManifest.xml:2: Warning: Custom permissions should have signature `protectionLevel`s or higher [InsecurePermissionProtectionLevel]
-                    <permission android:name="com.android.example.permission.CUSTOM_PERMISSION"
-                    ^
-                    0 errors, 1 warnings
-                    """
+                AndroidManifest.xml:2: Warning: Custom permissions should have a signature protectionLevel or higher [InsecurePermissionProtectionLevel]
+                <permission android:name="com.android.example.permission.CUSTOM_PERMISSION"
+                ^
+                0 errors, 1 warnings
+                """
             )
     }
 
