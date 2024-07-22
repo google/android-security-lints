@@ -16,6 +16,8 @@ for guidance on writing your own custom lint checks.
 This library uses the Apache license, as is Google's default.
 
 ## How to use this library
+Note: this library will be added to gMaven (maven.google.com) for easier consumption. The 
+README will be updated accordingly once the Maven repository has been published.
 
 1.  Clone it from GitHub.
 2.  Add the `checks` module to your app's `build.gradle` file:
@@ -30,7 +32,7 @@ dependencies {
 ```shell
 ext {
   ...
-  lintVersion = '31.0.2'
+  lintVersion = '31.5.1'
 }
 ```
 
