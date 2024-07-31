@@ -30,6 +30,11 @@ buildscript {
     }
 }
 
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
 allprojects {
     repositories {
         google()
@@ -37,6 +42,47 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.android.security.lint'
+            artifactId = 'lint'
+            version = '1.1'
+
+            pom {
+                name = 'Android Security Lints'
+                description = 'Custom security-focused experimental lint checks for Android development'
+                url = 'https://github.com/google/android-security-lints'
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'com.android.security.lint'
+                        name = 'Android Security Lint Contributors'
+                        url = 'https://github.com/google/android-security-lints'
+                        organization = 'Google - Android 3P Vulnerability Research'
+                        organizationUrl = 'https://www.google.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:https://github.com/google/android-security-lints.git'
+                    developerConnection = 'scm:git:git@github.com:google/android-security-lints.git'
+                    url = 'https://github.com/google/android-security-lints'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir('androidsecuritylints_m2repo')
+        }
+    }
 }
