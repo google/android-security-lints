@@ -35,6 +35,11 @@ plugins {
     id 'maven-publish'
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 allprojects {
     repositories {
         google()
@@ -48,6 +53,8 @@ publishing {
             groupId = 'com.android.security.lint'
             artifactId = 'lint'
             version = '1.1'
+
+            from components.java
 
             pom {
                 name = 'Android Security Lints'
