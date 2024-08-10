@@ -16,7 +16,7 @@ for guidance on writing your own custom lint checks.
 This library uses the Apache license, as is Google's default.
 
 ## How to use this library
-This library has now been added to [Google's Maven Repository](https://maven.google.com/web/index.html#com.android.security.lint:lint) for easier consumption.
+This library is available on [Google's Maven Repository](https://maven.google.com/web/index.html#com.android.security.lint:lint).
 
 1. Add the dependency to the app directory's `build.gradle.kts` file:
 
