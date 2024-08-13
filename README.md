@@ -33,7 +33,7 @@ This library is available on ![Google's Maven Repository](https://img.shields.io
    }
    ```
 
-3. Run `./gradlew lint` to see the results. Please file an issue if these instructions do not work for you.
+2. Run `./gradlew lint` to see the results. Please file an issue if these instructions do not work for you.
 
 ## Lint checks included in this library
 
