@@ -16,22 +16,22 @@ for guidance on writing your own custom lint checks.
 This library uses the Apache license, as is Google's default.
 
 ## How to use this library
-This library is available on [Google's Maven Repository](https://maven.google.com/web/index.html#com.android.security.lint:lint).
+This library is available on ![Google's Maven Repository](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fdl.google.com%2Fandroid%2Fmaven2%2Fcom%2Fandroid%2Fsecurity%2Flint%2Flint%2Fmaven-metadata.xml&label=Google's%20Maven%20Repository&link=https%3A%2F%2Fmaven.google.com%2Fweb%2Findex.html%23com.android.security.lint%3Alint)
 
 1. Add the dependency to the app directory's `build.gradle` file:
 
-```shell
-dependencies {
-  lintChecks 'com.android.security.lint:lint:1.0.1'
-}
-```
+   ```groovy
+   dependencies {
+     lintChecks 'com.android.security.lint:lint:<version>'
+   }
+   ```
 
-If using Kotlin instead of Groovy, add the dependency to the app directory's `build.gradle.kts` file:
-```kotlin
-dependencies {
-    lintChecks("com.android.security.lint:lint:1.0.1")
-}
-```
+   If using Kotlin instead of Groovy, add the dependency to the app directory's `build.gradle.kts` file:
+   ```kotlin
+   dependencies {
+      lintChecks("com.android.security.lint:lint:<version>")
+   }
+   ```
 
 2. Run `./gradlew lint` to see the results. Please file an issue if these instructions do not work for you.
 
