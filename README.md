@@ -20,7 +20,7 @@ This library is available on [Google's Maven Repository](https://maven.google.co
 
 1. Add the dependency to the app directory's `build.gradle` file:
 
-   ```shell
+   ```groovy
    dependencies {
      lintChecks 'com.android.security.lint:lint:1.0.1'
    }
