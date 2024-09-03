@@ -5,9 +5,10 @@ checks are by nature more security-focused and experimental than the built-in
 lint checks within Android Studio, and are intended for more security-conscious
 developers.
 
-These lint checks are based on guidance from the Android Application Security
-Knowledge Base that the Android Vulnerability Research team has developed, and
-common recurring vulnerabilities that the team spots in the wild.
+These lint checks are based on guidance from the
+[Android Application Security Knowledge Base](https://developer.android.com/privacy-and-security/risks)
+that the Android Vulnerability Research team has developed, and common recurring
+vulnerabilities that the team spots in the wild.
 
 Visit the official
 [Android Lint Github Repo](https://github.com/googlesamples/android-custom-lint-rules)
