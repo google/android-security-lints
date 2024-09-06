@@ -39,6 +39,7 @@ class IssueRegistry : IssueRegistry() {
         WeakPrngDetector.ISSUE,
         SafeBrowsingDetector.MANIFEST_ISSUE,
         PermissionDetector.PROTECTION_LEVEL_ISSUE,
+        UnsafeFilenameDetector.ISSUE
     )
 
     override val api: Int
