@@ -6,12 +6,6 @@ import java.io.File
 
 
 class FakeContentProviderFilenameSanitization {
-    private fun trustProvidedFilename_shouldWarn(cursor: Cursor) {
-        val id = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-        val fileName = cursor.getString(id)
-
-        val fileObject = File("./", fileName)
-    }
 
     private fun cursorFilenameAssignedToVariables(cursor: Cursor) {
         val fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
