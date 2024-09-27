@@ -19,6 +19,7 @@
     <uses-sdk android:targetSdkVersion="27"/>
     <permission android:name="com.android.example.permission.CUSTOM_PERMISSION"
                 android:protectionLevel="normal"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <application>
         <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
         <activity android:name="com.android.example.MainActivity">

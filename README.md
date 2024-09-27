@@ -17,7 +17,9 @@ for guidance on writing your own custom lint checks.
 This library uses the Apache license, as is Google's default.
 
 ## How to use this library
-This library is available on [![Google's Maven Repository](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fdl.google.com%2Fandroid%2Fmaven2%2Fcom%2Fandroid%2Fsecurity%2Flint%2Flint%2Fmaven-metadata.xml&label=Google's%20Maven%20Repository)](https://maven.google.com/web/index.html#com.android.security.lint:lint)
+
+This library is available
+on [![Google's Maven Repository](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fdl.google.com%2Fandroid%2Fmaven2%2Fcom%2Fandroid%2Fsecurity%2Flint%2Flint%2Fmaven-metadata.xml&label=Google's%20Maven%20Repository)](https://maven.google.com/web/index.html#com.android.security.lint:lint)
 
 1. Add the dependency to the app directory's `build.gradle` file:
 
@@ -39,12 +41,14 @@ This library is available on [![Google's Maven Repository](https://img.shields.i
 ## Lint checks included in this library
 
 ### [MASVS-STORAGE](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
+
 | Lint Issue ID           | Detector                                                                                                                 | Risk                                                                                                                        |
 |-------------------------|--------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
 | `ExposedRootPath`       | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Allowing the root directory of the device in the configuration provides arbitrary access to files and folders for attackers |
 | `SensitiveExternalPath` | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Sensitive info like PII should not be stored outside of the application container or system credential storage facilities   |
 
 ### [MASVS-CRYPTO](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
+
 | Lint Issue ID                | Detector                                                                                                       | Risk                                                                                                                                       |
 |------------------------------|----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | `VulnerableCryptoAlgorithm`  | [`BadCryptographyUsageDetector`](checks/src/main/java/com/example/lint/checks/BadCryptographyUsageDetector.kt) | Using weak or broken cryptographic hash functions may allow an attacker to reasonably determine the original input                         |
@@ -52,6 +56,7 @@ This library is available on [![Google's Maven Repository](https://img.shields.i
 | `WeakPrng`                   | [`WeakPrngDetector`](checks/src/main/java/com/example/lint/checks/WeakPrngDetector.kt)                         | Using non-cryptographically secure PRNGs in security contexts like authentication allows attackers to guess the randomly-generated numbers |
 
 ### [MASVS-NETWORK](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
+
 | Lint Issue ID             | Detector                                                                                                                       | Risk                                                                                                                                                                                                                        |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `DefaultCleartextTraffic` | [`MissingNetworkSecurityConfigDetector`](checks/src/main/java/com/example/lint/checks/MissingNetworkSecurityConfigDetector.kt) | On API level 27 and below, the default network security config trusts cleartext traffic and needs to be explicitly opted out by the application to only use secure connections                                              |
@@ -59,16 +64,18 @@ This library is available on [![Google's Maven Repository](https://img.shields.i
 | `DisabledAllSafeBrowsing` | [`SafeBrowsingDetector`](checks/src/main/java/com/example/lint/checks/SafeBrowsingDetector.kt)                                 | Safe Browsing is a service to help applications check URLs against a known list of unsafe web resources. We recommend keeping Safe Browsing enabled at all times and designing your app around any constraints this causes. |
 | `InsecureDnsSdkLevel`     | [`DnsConfigDetector`](checks/src/main/java/com/example/lint/checks/DnsConfigDetector.kt)                                       | Custom DNS configurations can be insecure, making an application susceptible to DNS spoofing attacks. We recommend instead making use of Android OS's built-in transport security on SDK levels 28 and above.               |
 
-
 ### [MASVS-PLATFORM](https://mas.owasp.org/MASVS/09-MASVS-PLATFORM/)
-| Lint Issue ID                | Detector                                                                                       | Risk                                                                                                                                                                                                 |
-|------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `TapjackingVulnerable`       | [`TapjackingDetector`](checks/src/main/java/com/example/lint/checks/TapjackingDetector.kt)     | Views without the `filterTouchesWhenObscured` attribute are susceptible to tapjacking attacks by other apps obscuring the UI to trick the user into performing certain actions                       |
-| `StrandhoggVulnerable`       | [`StrandhoggDetector`](checks/src/main/java/com/example/lint/checks/StrandhoggDetector.kt)     | Android previously had a bug in task reparenting in earlier versions, allowing malicious applications to hijack legitimate user actions and trick users into providing credentials to malicious apps |
-| `MissingAutoVerifyAttribute` | [`CustomSchemeDetector`](checks/src/main/java/com/example/lint/checks/CustomSchemeDetector.kt) | Exporting sensitive functionality via custom URL schemes should be properly protected by making use of app link verification                                                                         |
 
+| Lint Issue ID                        | Detector                                                                                               | Risk                                                                                                                                                                                                 |
+|--------------------------------------|--------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TapjackingVulnerable`               | [`TapjackingDetector`](checks/src/main/java/com/example/lint/checks/TapjackingDetector.kt)             | Views without the `filterTouchesWhenObscured` attribute are susceptible to tapjacking attacks by other apps obscuring the UI to trick the user into performing certain actions                       |
+| `StrandhoggVulnerable`               | [`StrandhoggDetector`](checks/src/main/java/com/example/lint/checks/StrandhoggDetector.kt)             | Android previously had a bug in task reparenting in earlier versions, allowing malicious applications to hijack legitimate user actions and trick users into providing credentials to malicious apps |
+| `MissingAutoVerifyAttribute`         | [`CustomSchemeDetector`](checks/src/main/java/com/example/lint/checks/CustomSchemeDetector.kt)         | Exporting sensitive functionality via custom URL schemes should be properly protected by making use of app link verification                                                                         |
+| `InsecureStickyBroadcastsPermission` | [`StickyBroadcastsDetector`](checks/src/main/java/com/example/lint/checks/StickyBroadcastsDetector.kt) | Sticky broadcasts provide no security as they can be accessed, sent, and modified by anyone.                                                                                                         |                                                                                                                          |
+| `InsecureStickyBroadcastsMethod`     | [`StickyBroadcastsDetector`](checks/src/main/java/com/example/lint/checks/StickyBroadcastsDetector.kt) | Sticky broadcasts provide no security as they can be accessed, sent, and modified by anyone.                                                                                                         |                                                                                                                          |
 
 ### [MASVS-CODE](https://mas.owasp.org/MASVS/10-MASVS-CODE/)
+
 | Lint Issue ID                            | Detector                                                                                                       | Risk                                                                                                                                                                                                    |
 |------------------------------------------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `InsecurePermissionProtectionLevel`      | [`PermissionDetector`](checks/src/main/java/com/example/lint/checks/PermissionDetector.kt)                     | Custom permissions should have a `signature` protectionLevel or higher.                                                                                                                                 |
@@ -79,4 +86,4 @@ This library is available on [![Google's Maven Repository](https://img.shields.i
 ## Contact
 
 For questions, comments or feature requests, please file an issue or start a
-discussion on Github. We would love to hear from you.
+discussion on GitHub. We would love to hear from you.
