@@ -97,7 +97,7 @@ class CustomSchemeDetector : Detector(), XmlScanner {
                 category = Category.SECURITY,
                 priority = 6,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/MissingAutoVerifyAttribute",
+                moreInfo = "https://goo.gle/MissingAutoVerifyAttribute",
                 implementation =
                 Implementation(CustomSchemeDetector::class.java, Scope.MANIFEST_SCOPE)
             )

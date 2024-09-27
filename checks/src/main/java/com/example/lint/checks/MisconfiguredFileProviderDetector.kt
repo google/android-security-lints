@@ -96,7 +96,7 @@ class MisconfiguredFileProviderDetector: ResourceXmlDetector() {
                 category = Category.SECURITY,
                 priority = 8,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/ExposedRootPath",
+                moreInfo = "https://goo.gle/ExposedRootPath",
                 implementation = IMPLEMENTATION
             )
 
@@ -113,7 +113,7 @@ class MisconfiguredFileProviderDetector: ResourceXmlDetector() {
                 category = Category.SECURITY,
                 priority = 4,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/SensitiveExternalPath",
+                moreInfo = "https://goo.gle/SensitiveExternalPath",
                 implementation = IMPLEMENTATION
             )
     }

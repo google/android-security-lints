@@ -74,7 +74,7 @@ class StrandhoggDetector : Detector(), XmlScanner {
                 category = Category.SECURITY,
                 priority = 6,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/StrandhoggVulnerable",
+                moreInfo = "https://goo.gle/StrandhoggVulnerable",
                 implementation =
                 Implementation(StrandhoggDetector::class.java, Scope.MANIFEST_SCOPE)
             )

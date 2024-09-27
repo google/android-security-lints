@@ -78,7 +78,7 @@ class PermissionDetector : Detector(), XmlScanner {
                 category = Category.SECURITY,
                 priority = 9,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/InsecurePermissionProtectionLevel",
+                moreInfo = "https://goo.gle/InsecurePermissionProtectionLevel",
                 implementation =
                 Implementation(PermissionDetector::class.java, Scope.MANIFEST_SCOPE)
             )

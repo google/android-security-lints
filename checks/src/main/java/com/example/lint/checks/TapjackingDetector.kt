@@ -75,7 +75,7 @@ class TapjackingDetector : ResourceXmlDetector() {
                 category = Category.SECURITY,
                 priority = 3,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/TapjackingVulnerable",
+                moreInfo = "https://goo.gle/TapjackingVulnerable",
                 implementation =
                 Implementation(TapjackingDetector::class.java, Scope.RESOURCE_FILE_SCOPE)
             )

@@ -132,7 +132,7 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
                 category = Category.SECURITY,
                 priority = 5,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/DefaultCleartextTraffic",
+                moreInfo = "https://goo.gle/DefaultCleartextTraffic",
                 implementation = IMPLEMENTATION
             )
 
@@ -150,7 +150,7 @@ class MissingNetworkSecurityConfigDetector : ResourceXmlDetector(), XmlScanner {
                 category = Category.SECURITY,
                 priority = 3,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/DefaultTrustedUserCerts",
+                moreInfo = "https://goo.gle/DefaultTrustedUserCerts",
                 implementation = IMPLEMENTATION
             )
     }

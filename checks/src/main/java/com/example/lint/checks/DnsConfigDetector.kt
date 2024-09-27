@@ -74,7 +74,7 @@ class DnsConfigDetector : Detector(), XmlScanner {
                 category = Category.SECURITY,
                 priority = 8,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/InsecureDnsSdkLevel",
+                moreInfo = "https://goo.gle/InsecureDnsSdkLevel",
                 implementation =
                 Implementation(DnsConfigDetector::class.java, Scope.MANIFEST_SCOPE)
             )

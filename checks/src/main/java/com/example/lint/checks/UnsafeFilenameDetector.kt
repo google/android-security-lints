@@ -133,7 +133,7 @@ class UnsafeFilenameDetector : Detector(), SourceCodeScanner {
                   client app with a maliciously constructed filename. The client app should never trust \
                   this filename and should either sanitize it or completely discard it.
                 """,
-            moreInfo = "http://goo.gle/UnsanitizedFilenameFromContentProvider",
+            moreInfo = "https://goo.gle/UnsanitizedFilenameFromContentProvider",
             category = Category.SECURITY,
             priority = 6,
             severity = Severity.WARNING,

@@ -148,7 +148,7 @@ class BadCryptographyUsageDetector: Detector(), SourceCodeScanner {
                 category = Category.SECURITY,
                 priority = 9,
                 severity = Severity.ERROR,
-                moreInfo = "http://goo.gle/VulnerableCryptoAlgorithm",
+                moreInfo = "https://goo.gle/VulnerableCryptoAlgorithm",
                 implementation = IMPLEMENTATION
             )
 
@@ -165,7 +165,7 @@ class BadCryptographyUsageDetector: Detector(), SourceCodeScanner {
                 category = Category.SECURITY,
                 priority = 8,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/UnsafeCryptoAlgorithmUsage",
+                moreInfo = "https://goo.gle/UnsafeCryptoAlgorithmUsage",
                 implementation = IMPLEMENTATION
             )
     }

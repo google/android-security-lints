@@ -133,7 +133,7 @@ class UnintendedExposedUrlDetector: ResourceXmlDetector() {
                 category = Category.SECURITY,
                 priority = 3,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/UnintendedExposedUrl",
+                moreInfo = "https://goo.gle/UnintendedExposedUrl",
                 implementation = IMPLEMENTATION
             )
 
@@ -151,7 +151,7 @@ class UnintendedExposedUrlDetector: ResourceXmlDetector() {
                 category = Category.SECURITY,
                 priority = 4,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/UnintendedPrivateIpAddress",
+                moreInfo = "https://goo.gle/UnintendedPrivateIpAddress",
                 implementation = IMPLEMENTATION
             )
     }

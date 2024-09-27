@@ -63,22 +63,16 @@ class SafeBrowsingDetector : Detector(), XmlScanner {
         any constraints this causes.
         """
 
-        /** Issue describing the problem and pointing to the detector implementation. */
         @JvmField
         val MANIFEST_ISSUE: Issue =
             Issue.create(
-                // ID: used in @SuppressLint warnings etc
                 id = "DisabledAllSafeBrowsing",
-                // Title -- shown in the IDE's preference dialog, as category headers in the
-                // Analysis results window, etc
                 briefDescription = "Application has disabled safe browsing for all WebView objects",
-                // Full explanation of the issue; you can use some markdown markup such as
-                // `monospace`, *italic*, and **bold**.
                 explanation = EXPLANATION,
                 category = Category.SECURITY,
                 priority = 8,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/DisabledAllSafeBrowsing",
+                moreInfo = "https://goo.gle/DisabledAllSafeBrowsing",
                 implementation =
                 Implementation(SafeBrowsingDetector::class.java, Scope.MANIFEST_SCOPE)
             )

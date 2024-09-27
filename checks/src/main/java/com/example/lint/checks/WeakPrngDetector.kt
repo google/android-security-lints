@@ -89,7 +89,7 @@ class WeakPrngDetector: Detector(), SourceCodeScanner {
                 category = Category.SECURITY,
                 priority = 4,
                 severity = Severity.WARNING,
-                moreInfo = "http://goo.gle/WeakPrng",
+                moreInfo = "https://goo.gle/WeakPrng",
                 implementation =  Implementation(WeakPrngDetector::class.java, Scope.JAVA_FILE_SCOPE)
             )
     }
