@@ -16,6 +16,7 @@
 package com.android.example
 
 import android.app.Activity
+import android.content.Intent
 import java.lang.Math
 import javax.crypto.Cipher
 
@@ -34,5 +35,10 @@ class MainActivity: Activity() {
 
     private fun triggerWeakPrng() {
         val random = Math.random() * 100
+    }
+
+    private fun triggerInsecureStickyBroadcastMethod() {
+        val intent = Intent()
+        this.sendStickyBroadcast(intent)
     }
 }
