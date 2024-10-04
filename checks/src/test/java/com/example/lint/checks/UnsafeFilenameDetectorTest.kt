@@ -52,10 +52,10 @@ class UnsafeFilenameDetectorTest : LintDetectorTest() {
         .run()
         .expect(
             """
-            src/TestClass.java:10: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:10: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.kt:10: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:10: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
             0 errors, 2 warnings
@@ -200,52 +200,52 @@ class UnsafeFilenameDetectorTest : LintDetectorTest() {
         .run()
         .expect(
             """
-            src/TestClass.java:12: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:12: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.java:23: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:23: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.java:32: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:32: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.java:39: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:39: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.java:40: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:40: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 new File("./", fileName);
                                ~~~~~~~~
-            src/TestClass.java:47: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:47: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.java:53: Warning: Using cursor.getString(id) is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:53: Warning: Using cursor.getString(id) is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", cursor.getString(id));
                                                  ~~~~~~~~~~~~~~~~~~~~
-            src/TestClass.java:60: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:60: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.kt:12: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:12: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
-            src/TestClass.kt:23: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:23: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
-            src/TestClass.kt:30: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:30: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
-            src/TestClass.kt:37: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:37: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
-            src/TestClass.kt:38: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:38: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File("./", fileName)
                            ~~~~~~~~
-            src/TestClass.kt:45: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:45: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
-            src/TestClass.kt:51: Warning: Using cursor.getString(id) is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:51: Warning: Using cursor.getString(id) is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", cursor.getString(id))
                                             ~~~~~~~~~~~~~~~~~~~~
-            src/TestClass.kt:58: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:58: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
             0 errors, 16 warnings
@@ -448,10 +448,10 @@ class UnsafeFilenameDetectorTest : LintDetectorTest() {
         .run()
         .expect(
             """
-            src/TestClass.java:18: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:18: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 new File("./", fileName);
                                ~~~~~~~~
-            src/TestClass.kt:18: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:18: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File("./", fileName)
                            ~~~~~~~~
             0 errors, 2 warnings
@@ -529,16 +529,16 @@ class UnsafeFilenameDetectorTest : LintDetectorTest() {
         .run()
         .expect(
             """
-            src/TestClass.java:15: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:15: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.java:25: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.java:25: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 File fileObject = new File("./", fileName);
                                                  ~~~~~~~~
-            src/TestClass.kt:15: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:15: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
-            src/TestClass.kt:26: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedFilenameFromContentProvider]
+            src/TestClass.kt:26: Warning: Using fileName is unsafe as it is a filename obtained directly from a ContentProvider. You should sanitize it before using it for creating a File. [UnsanitizedContentProviderFilename]
                 val fileObject = File("./", fileName)
                                             ~~~~~~~~
             0 errors, 4 warnings
@@ -648,7 +648,7 @@ class UnsafeFilenameDetectorTest : LintDetectorTest() {
                 import java.io.File;
 
                 class TestClass {
-                  @android.annotation.SuppressLint("UnsanitizedFilenameFromContentProvider")
+                  @android.annotation.SuppressLint("UnsanitizedContentProviderFilename")
                   private void suppressWarningAtMethodLevel(Cursor cursor) {
                     String fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                     File fileObject = new File("./", fileName);
@@ -657,7 +657,7 @@ class UnsafeFilenameDetectorTest : LintDetectorTest() {
                   private void suppressWarningAtSpecificLocationLevel(Cursor cursor) {
                     String fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
 
-                    @android.annotation.SuppressLint("UnsanitizedFilenameFromContentProvider")
+                    @android.annotation.SuppressLint("UnsanitizedContentProviderFilename")
                     File fileObject = new File("./", fileName);
                   }
                 }
@@ -670,7 +670,7 @@ class UnsafeFilenameDetectorTest : LintDetectorTest() {
                 import java.io.File
 
                 class TestClass {
-                  @android.annotation.SuppressLint("UnsanitizedFilenameFromContentProvider")
+                  @android.annotation.SuppressLint("UnsanitizedContentProviderFilename")
                   private fun suppressWarningAtMethodLevel(cursor: Cursor) {
                     val fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
                     val fileObject = File("./", fileName)
@@ -679,7 +679,7 @@ class UnsafeFilenameDetectorTest : LintDetectorTest() {
                   private fun suppressWarningAtSpecificLocationLevel(cursor: Cursor) {
                     val fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
 
-                    @android.annotation.SuppressLint("UnsanitizedFilenameFromContentProvider")
+                    @android.annotation.SuppressLint("UnsanitizedContentProviderFilename")
                     val fileObject = File("./", fileName)
                   }
                 }

@@ -51,7 +51,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.android.security.lint'
             artifactId = 'lint'
-            version = '1.0.2'
+            version = '1.0.3'
 
             from components.kotlin
 

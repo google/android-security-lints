@@ -125,7 +125,7 @@ class UnsafeFilenameDetector : Detector(), SourceCodeScanner {
     @JvmField
     val ISSUE =
         Issue.create(
-            id = "UnsanitizedFilenameFromContentProvider",
+            id = "UnsanitizedContentProviderFilename",
             briefDescription = "Trusting ContentProvider filenames without any sanitization",
             explanation =
                 """
@@ -133,7 +133,7 @@ class UnsafeFilenameDetector : Detector(), SourceCodeScanner {
                   client app with a maliciously constructed filename. The client app should never trust \
                   this filename and should either sanitize it or completely discard it.
                 """,
-            moreInfo = "https://goo.gle/UnsanitizedFilenameFromContentProvider",
+            moreInfo = "https://goo.gle/UnsanitizedContentProviderFilename",
             category = Category.SECURITY,
             priority = 6,
             severity = Severity.WARNING,
