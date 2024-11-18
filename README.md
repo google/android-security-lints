@@ -47,6 +47,10 @@ on [![Google's Maven Repository](https://img.shields.io/maven-metadata/v?metadat
 | `ExposedRootPath`       | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Allowing the root directory of the device in the configuration provides arbitrary access to files and folders for attackers. |
 | `SensitiveExternalPath` | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Sensitive info like PII should not be stored outside of the application container or system credential storage facilities.   |
 | `LogInfoDisclosure`     | [`LogcatDetector`](checks/src/main/java/com/example/lint/checks/LogcatDetector.kt)                                       | Logging potentially sensitive information to logcat can leak it.                                                             |                                                     |
+| `DotPathAttribute`      | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Sharing broad path ranges can expose sensitive files by mistake.                                                             |                                                     |
+| `SlashPathAttribute`    | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Sharing broad path ranges can expose sensitive files by mistake.                                                             |                                                     |
+| `HardcodedAbsolutePath` | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Sharing broad path ranges can expose sensitive files by mistake.                                                             |                                                     |
+
 
 ### [MASVS-CRYPTO](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
 

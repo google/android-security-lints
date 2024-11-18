@@ -26,7 +26,10 @@ import org.junit.runners.JUnit4
 class MisconfiguredFileProviderDetectorTest : LintDetectorTest() {
     override fun getIssues() = mutableListOf(
         MisconfiguredFileProviderDetector.ROOT_PATH_ISSUE,
-        MisconfiguredFileProviderDetector.EXTERNAL_PATH_ISSUE
+        MisconfiguredFileProviderDetector.EXTERNAL_PATH_ISSUE,
+        MisconfiguredFileProviderDetector.DOT_PATH_ISSUE,
+        MisconfiguredFileProviderDetector.SLASH_PATH_ISSUE,
+        MisconfiguredFileProviderDetector.ABSOLUTE_PATH_ISSUE
     )
 
     override fun getDetector(): Detector = MisconfiguredFileProviderDetector()
@@ -87,6 +90,87 @@ class MisconfiguredFileProviderDetectorTest : LintDetectorTest() {
     }
 
     @Test
+    fun testWhenDotPathUsedInConfig_showsWarningAndQuickFix() {
+        lint()
+            .files(
+                xml("res/xml/file_paths.xml",
+                    """<?xml version="1.0" encoding="utf-8"?>
+                    <paths xmlns:android="http://schemas.android.com/apk/res/android">
+                       <files-path name="my_images" path="images/"/>
+                       <files-path name="my_docs" path="docs/"/>
+                       <files-path name="root" path="."/>
+                    </paths>
+                    """
+                ).indented()
+            ).run().expect(
+                """
+                res/xml/file_paths.xml:5: Warning: The "path" attribute should not be set to "." [DotPathAttribute]
+                                       <files-path name="root" path="."/>
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                0 errors, 1 warnings
+                """
+            ).expectFixDiffs("""
+                Fix for res/xml/file_paths.xml line 5: Delete:
+                @@ -5 +5
+                -                        <files-path name="root" path="."/>
+            """)
+    }
+
+    @Test
+    fun testWhenSlashPathUsedInConfig_showsWarningAndQuickFix() {
+        lint()
+            .files(
+                xml("res/xml/file_paths.xml",
+                    """<?xml version="1.0" encoding="utf-8"?>
+                    <paths xmlns:android="http://schemas.android.com/apk/res/android">
+                       <files-path name="my_images" path="images/"/>
+                       <files-path name="my_docs" path="docs/"/>
+                       <cache-path name="home" path="/"/>
+                    </paths>
+                    """
+                ).indented()
+            ).run().expect(
+                """
+                res/xml/file_paths.xml:5: Warning: The "path" attribute should not be set to "/"  [SlashPathAttribute]
+                                       <cache-path name="home" path="/"/>
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                0 errors, 1 warnings
+                """
+            ).expectFixDiffs("""
+            Fix for res/xml/file_paths.xml line 5: Delete:
+            @@ -5 +5
+            -                        <cache-path name="home" path="/"/>
+            """)
+    }
+
+    @Test
+    fun testWhenAbsolutePathUsedInConfig_showsWarningAndQuickFix() {
+        lint()
+            .files(
+                xml("res/xml/file_paths.xml",
+                    """<?xml version="1.0" encoding="utf-8"?>
+                    <paths xmlns:android="http://schemas.android.com/apk/res/android">
+                       <files-path name="my_images" path="images/"/>
+                       <files-path name="my_docs" path="docs/"/>
+                       <external-media-path name="files" path="/Documents"/>
+                    </paths>
+                    """
+                ).indented()
+            ).run().expect(
+                """
+                res/xml/file_paths.xml:5: Warning: The "path" attribute should not be an absolute path [HardcodedAbsolutePath]
+                                       <external-media-path name="files" path="/Documents"/>
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                0 errors, 1 warnings
+                """
+            ).expectFixDiffs("""
+                Fix for res/xml/file_paths.xml line 5: Delete:
+                @@ -5 +5
+                -                        <external-media-path name="files" path="/Documents"/>
+            """)
+    }
+
+    @Test
     fun testWhenNoRootOrExternalPathUsedInConfig_noWarning() {
         lint()
             .files(
@@ -95,6 +179,22 @@ class MisconfiguredFileProviderDetectorTest : LintDetectorTest() {
                     <paths xmlns:android="http://schemas.android.com/apk/res/android">
                        <files-path name="my_images" path="images/"/>
                        <files-path name="my_docs" path="docs/"/>
+                    </paths>
+                    """
+                ).indented()
+            ).run().expectClean()
+    }
+
+    @Test
+    fun testWhenNoSpecialCharPathsUsedInConfig_noWarning() {
+        lint()
+            .files(
+                xml("res/xml/file_paths.xml",
+                    """<?xml version="1.0" encoding="utf-8"?>
+                    <paths xmlns:android="http://schemas.android.com/apk/res/android">
+                       <files-path name="my_images" path="images/."/>
+                       <files-path name="my_docs" path="not/an/absolute/path"/>
+                       <external-cache-path name="my_downloads" path="cache/"/>
                     </paths>
                     """
                 ).indented()

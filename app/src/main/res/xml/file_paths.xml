@@ -17,4 +17,7 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <root-path name="test_root" />
     <external-path name="sensitive_pii" path="/sdcard" />
+    <files-path name="test_dot" path="." />
+    <cache-path name="test_slash" path="/" />
+    <external-media-path name="test_absolute" path="/absolute/path" />
 </paths>
