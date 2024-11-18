@@ -16,6 +16,7 @@
 package com.android.example
 
 import android.app.Activity
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import java.lang.Math
 import javax.crypto.Cipher
@@ -40,5 +41,17 @@ class MainActivity: Activity() {
     private fun triggerInsecureStickyBroadcastMethod() {
         val intent = Intent()
         this.sendStickyBroadcast(intent)
+    }
+
+    private fun triggerExtendedBluetoothDiscoveryDuration() {
+        val discoverableIntent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
+            putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 121)
+        }
+    }
+
+    private fun triggerZeroBluetoothDiscoveryDuration() {
+        val discoverableIntent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
+            putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0)
+        }
     }
 }

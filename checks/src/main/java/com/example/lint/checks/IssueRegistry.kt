@@ -41,7 +41,9 @@ class IssueRegistry : IssueRegistry() {
         PermissionDetector.PROTECTION_LEVEL_ISSUE,
         UnsafeFilenameDetector.ISSUE,
         StickyBroadcastsDetector.STICKY_METHOD_ISSUE,
-        StickyBroadcastsDetector.STICKY_PERMISSION_ISSUE
+        StickyBroadcastsDetector.STICKY_PERMISSION_ISSUE,
+        BluetoothAdapterDetector.ZERO_BLUETOOTH_DISCOVERY_DURATION_ISSUE,
+        BluetoothAdapterDetector.EXTENDED_BLUETOOTH_DISCOVERY_DURATION_ISSUE
     )
 
     override val api: Int
