@@ -18,6 +18,7 @@ package com.android.example
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
+import android.util.Log
 import java.lang.Math
 import javax.crypto.Cipher
 
@@ -53,5 +54,9 @@ class MainActivity: Activity() {
         val discoverableIntent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
             putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0)
         }
+    }
+
+    private fun triggerLogInfoDisclosure() {
+        Log.wtf("testpasswordtest", "test")
     }
 }

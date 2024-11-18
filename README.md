@@ -46,6 +46,7 @@ on [![Google's Maven Repository](https://img.shields.io/maven-metadata/v?metadat
 |-------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
 | `ExposedRootPath`       | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Allowing the root directory of the device in the configuration provides arbitrary access to files and folders for attackers. |
 | `SensitiveExternalPath` | [`MisconfiguredFileProviderDetector`](checks/src/main/java/com/example/lint/checks/MisconfiguredFileProviderDetector.kt) | Sensitive info like PII should not be stored outside of the application container or system credential storage facilities.   |
+| `LogInfoDisclosure`     | [`LogcatDetector`](checks/src/main/java/com/example/lint/checks/LogcatDetector.kt)                                       | Logging potentially sensitive information to logcat can leak it.                                                             |                                                     |
 
 ### [MASVS-CRYPTO](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
 
