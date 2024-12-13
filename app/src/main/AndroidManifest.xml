@@ -20,7 +20,7 @@
     <permission android:name="com.android.example.permission.CUSTOM_PERMISSION"
                 android:protectionLevel="normal"/>
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <application>
+    <application android:requestLegacyExternalStorage="true">
         <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
         <activity android:name="com.android.example.MainActivity">
             <intent-filter>
