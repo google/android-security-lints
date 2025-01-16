@@ -42,7 +42,6 @@ class IssueRegistry : IssueRegistry() {
         WeakPrngDetector.ISSUE,
         SafeBrowsingDetector.MANIFEST_ISSUE,
         PermissionDetector.PROTECTION_LEVEL_ISSUE,
-        UnsafeFilenameDetector.ISSUE,
         StickyBroadcastsDetector.STICKY_METHOD_ISSUE,
         StickyBroadcastsDetector.STICKY_PERMISSION_ISSUE,
         BluetoothAdapterDetector.ZERO_BLUETOOTH_DISCOVERY_DURATION_ISSUE,
