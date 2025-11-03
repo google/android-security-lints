@@ -158,7 +158,7 @@ class TapjackingDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenAttributeIsAlreadyPresent_noWarning() {
+    fun testWhenAttributeIsAlreadyPresentAndTrue_showsNoWarning() {
         lint()
             .files(
                 xml(
