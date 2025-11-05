@@ -17,6 +17,9 @@ package com.example.lint.checks
 
 import com.android.SdkConstants.ANDROID_URI
 import com.android.SdkConstants.ATTR_AUTO_VERIFY
+import com.android.SdkConstants.ATTR_SCHEME
+import com.android.SdkConstants.TAG_ACTION
+import com.android.SdkConstants.TAG_CATEGORY
 import com.android.SdkConstants.TAG_DATA
 import com.android.SdkConstants.TAG_INTENT_FILTER
 import com.android.tools.lint.detector.api.Category
@@ -31,68 +34,96 @@ import com.android.tools.lint.detector.api.XmlScanner
 import com.android.utils.childrenIterator
 import org.w3c.dom.Element
 
-/**
- * Detector flagging whether the application has issues verifying custom schemes (i.e. not http/https/file/ftp/ftps).
- */
 class CustomSchemeDetector : Detector(), XmlScanner {
     override fun getApplicableElements() = setOf(TAG_INTENT_FILTER)
 
     override fun visitElement(context: XmlContext, element: Element) {
-        val autoVerifyAttribute = element.getAttributeNS(ANDROID_URI, ATTR_AUTO_VERIFY)
+        if (!hasViewAction(element) ||
+            !hasBrowsableCategory(element) ||
+            !hasDefaultCategory(element)
+        ) {
+            return
+        }
 
-        if (autoVerifyAttribute != "true") {
-            val incident =
-                Incident(
+        if (element.hasAttributeNS(ANDROID_URI, ATTR_AUTO_VERIFY)) {
+            return
+        }
+
+        val dataElements = element.getElementsByTagName(TAG_DATA)
+        if (dataElements.length == 0) {
+            return
+        }
+
+        for (i in 0 until dataElements.length) {
+            val data = dataElements.item(i) as Element
+            if (!data.hasAttributeNS(ANDROID_URI, ATTR_SCHEME)) {
+                continue
+            }
+
+            val scheme = data.getAttributeNS(ANDROID_URI, ATTR_SCHEME)
+            if (scheme == "http" || scheme == "https") {
+                context.report(
                     AUTOVERIFY_ATTRIBUTE_ISSUE,
                     element,
-                    context.getLocation(element),
-                    "Custom scheme intent filters should explicitly set the `autoVerify` attribute to true",
-                    fix().set().android().attribute(ATTR_AUTO_VERIFY).value("true").build()
+                    context.getNameLocation(element),
+                    "This intent filter matches App Links (VIEW, BROWSABLE, DEFAULT, http/https), " +
+                    "but is missing the `android:autoVerify=\"true\"` attribute. " +
+                    "See https://developer.android.com/training/app-links/verify-android-applinks",
+                    fix().set().namespace(ANDROID_URI).attribute(ATTR_AUTO_VERIFY).value("true").build()
                 )
-
-            if (hasCustomSchemes(element)) {
-                // Only have the lint check fire if there are custom schemes present
-                context.report(incident)
+                return
             }
         }
     }
 
-    private fun hasCustomSchemes(element: Element): Boolean {
-        for (child in element.childrenIterator()) {
-            if (child.nodeName == TAG_DATA && child.hasAttributes()) {
-                for (i in 0 until child.attributes.length) {
-                    val attribute = child.attributes.item(i)
-                    val name = attribute.localName ?: continue
-                    val value = attribute.nodeValue
+    private fun hasViewAction(element: Element): Boolean {
+        val actions = element.getElementsByTagName(TAG_ACTION)
+        for (i in 0 until actions.length) {
+            val action = actions.item(i) as Element
+            if ("android.intent.action.VIEW" == action.getAttributeNS(ANDROID_URI, "name")) {
+                return true
+            }
+        }
+        return false
+    }
 
-                    if (value !in REGULAR_SCHEMES) {
-                        return true
-                    }
-                }
+    private fun hasBrowsableCategory(element: Element): Boolean {
+        val categories = element.getElementsByTagName(TAG_CATEGORY)
+        for (i in 0 until categories.length) {
+            val category = categories.item(i) as Element
+            if ("android.intent.category.BROWSABLE" == category.getAttributeNS(ANDROID_URI, "name")) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun hasDefaultCategory(element: Element): Boolean {
+        val categories = element.getElementsByTagName(TAG_CATEGORY)
+        for (i in 0 until categories.length) {
+            val category = categories.item(i) as Element
+            if ("android.intent.category.DEFAULT" == category.getAttributeNS(ANDROID_URI, "name")) {
+                return true
             }
         }
         return false
     }
 
     companion object {
-        private val REGULAR_SCHEMES = listOf("http", "https", "file", "ftp", "ftps")
-
         private const val EXPLANATION = """
-        Intent filters should contain the `autoVerify` attribute and explicitly set it to true, in order \
-        to signal to the system to automatically verify the associated hosts in your app's intent filters.
-        """
+            Intent filters that handle `http` or `https` schemes and include \
+            `android.intent.action.VIEW`, `android.intent.category.BROWSABLE`, and \
+            `android.intent.category.DEFAULT` should also include \
+            `android:autoVerify="true"`. This enables Android App Links, which securely \
+            associates your app with your domain. \
+            See https://developer.android.com/training/app-links/verify-android-applinks
+            """
 
-        /** Issue describing the problem and pointing to the detector implementation. */
         @JvmField
         val AUTOVERIFY_ATTRIBUTE_ISSUE: Issue =
             Issue.create(
-                // ID: used in @SuppressLint warnings etc
                 id = "MissingAutoVerifyAttribute",
-                // Title -- shown in the IDE's preference dialog, as category headers in the
-                // Analysis results window, etc
-                briefDescription = "Application has custom scheme intent filters with missing `autoVerify` attributes",
-                // Full explanation of the issue; you can use some markdown markup such as
-                // `monospace`, *italic*, and **bold**.
+                briefDescription = "Application has http/https scheme intent filters with missing `autoVerify` attributes",
                 explanation = EXPLANATION,
                 category = Category.SECURITY,
                 priority = 6,
