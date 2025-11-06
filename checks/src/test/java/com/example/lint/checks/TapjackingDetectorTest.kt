@@ -156,4 +156,50 @@ class TapjackingDetectorTest : LintDetectorTest() {
                 ).indented()
             ).run().expectClean()
     }
+
+    @Test
+    fun testWhenAttributeIsAlreadyPresentAndTrue_showsNoWarning() {
+        lint()
+            .files(
+                xml(
+                    "res/xml/button.xml",
+                    """
+                    <?xml version="1.0" encoding="utf-8"?>
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android">
+                        <CompoundButton
+                            android:id='disable_setting'
+                            android:filterTouchesWhenObscured='true' >
+                        </CompoundButton>
+                    </LinearLayout>
+                    """
+                ).indented()
+            ).run().expectClean()
+    }
+
+    @Test
+    fun testWhenAttributeIsAlreadyPresentAndFalse_showsQuickFix() {
+        lint()
+            .files(
+                xml(
+                    "res/xml/button.xml",
+                    """
+                    <?xml version="1.0" encoding="utf-8"?>
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android">
+                        <CompoundButton
+                            android:id='disable_setting'
+                            android:filterTouchesWhenObscured='false' >
+                        </CompoundButton>
+                    </LinearLayout>
+                    """
+                ).indented()
+            ).run().expectFixDiffs(
+            """
+                    Fix for res/xml/button.xml line 3: Set filterTouchesWhenObscured="true":
+                    @@ -6 +6
+                    -         android:filterTouchesWhenObscured="false" >
+                    +         android:filterTouchesWhenObscured="true" >
+                    """
+        )
+
+    }
 }
