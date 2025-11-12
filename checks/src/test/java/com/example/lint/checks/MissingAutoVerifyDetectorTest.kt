@@ -23,10 +23,10 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class CustomSchemeDetectorTest : LintDetectorTest() {
-    override fun getIssues() = mutableListOf(CustomSchemeDetector.AUTOVERIFY_ATTRIBUTE_ISSUE)
+class MissingAutoVerifyDetectorTest : LintDetectorTest() {
+    override fun getIssues() = mutableListOf(MissingAutoVerifyDetector.AUTOVERIFY_ATTRIBUTE_ISSUE)
 
-    override fun getDetector(): Detector = CustomSchemeDetector()
+    override fun getDetector(): Detector = MissingAutoVerifyDetector()
 
     @Test
     fun testWhenNoIntentFilterSpecifiedInManifest_showsNoWarning() {

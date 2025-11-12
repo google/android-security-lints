@@ -33,14 +33,26 @@ import com.android.tools.lint.detector.api.XmlContext
 import com.android.tools.lint.detector.api.XmlScanner
 import com.android.utils.childrenIterator
 import org.w3c.dom.Element
+import org.w3c.dom.NodeList
 
-class CustomSchemeDetector : Detector(), XmlScanner {
+/**
+ * Detector checking for missing `autoVerify` attributes in Android App Links.
+ *
+ * This detector scans `AndroidManifest.xml` for `<intent-filter>` elements that appear to be
+ * configured for Android App Links.
+ * An intent filter is considered an App Link if it meets the following criteria:
+ * 1. Defines the `android.intent.action.VIEW` action.
+ * 2. Includes the `android.intent.category.BROWSABLE` category.
+ * 3. Includes the `android.intent.category.DEFAULT` category.
+ * 4. Defines a `<data>` tag with an `http` or `https` scheme.
+ */
+class MissingAutoVerifyDetector : Detector(), XmlScanner {
     override fun getApplicableElements() = setOf(TAG_INTENT_FILTER)
 
     override fun visitElement(context: XmlContext, element: Element) {
         if (!hasViewAction(element) ||
-            !hasBrowsableCategory(element) ||
-            !hasDefaultCategory(element)
+            !hasCategory(element, "android.intent.category.BROWSABLE") ||
+            !hasCategory(element, "android.intent.category.DEFAULT")
         ) {
             return
         }
@@ -50,12 +62,7 @@ class CustomSchemeDetector : Detector(), XmlScanner {
         }
 
         val dataElements = element.getElementsByTagName(TAG_DATA)
-        if (dataElements.length == 0) {
-            return
-        }
-
-        for (i in 0 until dataElements.length) {
-            val data = dataElements.item(i) as Element
+        for (data in dataElements) {
             if (!data.hasAttributeNS(ANDROID_URI, ATTR_SCHEME)) {
                 continue
             }
@@ -78,31 +85,20 @@ class CustomSchemeDetector : Detector(), XmlScanner {
 
     private fun hasViewAction(element: Element): Boolean {
         val actions = element.getElementsByTagName(TAG_ACTION)
-        for (i in 0 until actions.length) {
-            val action = actions.item(i) as Element
-            if ("android.intent.action.VIEW" == action.getAttributeNS(ANDROID_URI, "name")) {
+
+        for (action in actions) {
+            if (action.getAttributeNS(ANDROID_URI, "name") == "android.intent.action.VIEW") {
                 return true
             }
         }
         return false
     }
 
-    private fun hasBrowsableCategory(element: Element): Boolean {
+    private fun hasCategory(element: Element, categoryName: String): Boolean {
         val categories = element.getElementsByTagName(TAG_CATEGORY)
-        for (i in 0 until categories.length) {
-            val category = categories.item(i) as Element
-            if ("android.intent.category.BROWSABLE" == category.getAttributeNS(ANDROID_URI, "name")) {
-                return true
-            }
-        }
-        return false
-    }
-
-    private fun hasDefaultCategory(element: Element): Boolean {
-        val categories = element.getElementsByTagName(TAG_CATEGORY)
-        for (i in 0 until categories.length) {
-            val category = categories.item(i) as Element
-            if ("android.intent.category.DEFAULT" == category.getAttributeNS(ANDROID_URI, "name")) {
+        
+        for (category in categories) {
+            if (category.getAttributeNS(ANDROID_URI, "name") == categoryName) {
                 return true
             }
         }
@@ -130,7 +126,16 @@ class CustomSchemeDetector : Detector(), XmlScanner {
                 severity = Severity.WARNING,
                 moreInfo = "https://goo.gle/MissingAutoVerifyAttribute",
                 implementation =
-                Implementation(CustomSchemeDetector::class.java, Scope.MANIFEST_SCOPE)
+                Implementation(MissingAutoVerifyDetector::class.java, Scope.MANIFEST_SCOPE)
             )
     }
+}
+
+/**
+ * Extension to allow for-in loops over NodeList. 
+ */
+operator fun NodeList.iterator(): Iterator<Element> = object : Iterator<Element> {
+    private var index = 0
+    override fun hasNext(): Boolean = index < length
+    override fun next(): Element = item(index++) as Element
 }
