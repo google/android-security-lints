@@ -23,10 +23,10 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class CustomSchemeDetectorTest : LintDetectorTest() {
-    override fun getIssues() = mutableListOf(CustomSchemeDetector.AUTOVERIFY_ATTRIBUTE_ISSUE)
+class MissingAutoVerifyDetectorTest : LintDetectorTest() {
+    override fun getIssues() = mutableListOf(MissingAutoVerifyDetector.AUTOVERIFY_ATTRIBUTE_ISSUE)
 
-    override fun getDetector(): Detector = CustomSchemeDetector()
+    override fun getDetector(): Detector = MissingAutoVerifyDetector()
 
     @Test
     fun testWhenNoIntentFilterSpecifiedInManifest_showsNoWarning() {
@@ -54,6 +54,8 @@ class CustomSchemeDetectorTest : LintDetectorTest() {
                         <activity android:name='com.example.MainActivity'>
                             <intent-filter android:autoVerify='true'>
                                 <action android:name='android.intent.action.VIEW' />
+                                <category android:name='android.intent.category.BROWSABLE' />
+                                <category android:name='android.intent.category.DEFAULT' />
                                 <data android:scheme='telegram://' />
                             </intent-filter>
                         </activity>
@@ -65,7 +67,7 @@ class CustomSchemeDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenNoAutoVerifyAttributeSpecifiedOnRegularSchemeIntentFilter_noWarning() {
+    fun testWhenHttpSchemeButMissingCategories_noWarning() {
         lint()
             .files(
                 manifest("""
@@ -87,7 +89,30 @@ class CustomSchemeDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenFalseAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_showsWarning() {
+    fun testWhenHttpSchemeButMissingAction_noWarning() {
+        lint()
+            .files(
+                manifest("""
+                    <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
+                    <application android:debuggable='false'>
+                    <meta-data android:name='android.webkit.WebView.EnableSafeBrowsing'/>
+                        <activity android:name='com.example.MainActivity'>
+                            <intent-filter>
+                                <category android:name='android.intent.category.BROWSABLE' />
+                                <category android:name='android.intent.category.DEFAULT' />
+                                <data android:scheme='http' />
+                                <data android:scheme='https' />
+                            </intent-filter>
+                        </activity>
+                    </application>
+                    </manifest>
+                    """
+                ).indented()
+            ).run().expectClean()
+    }
+
+    @Test
+    fun testWhenFalseAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_noWarning() {
         lint().files(
             manifest("""
                     <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
@@ -96,7 +121,54 @@ class CustomSchemeDetectorTest : LintDetectorTest() {
                         <activity android:name='com.example.MainActivity'>
                             <intent-filter android:autoVerify='false'>
                                 <action android:name='android.intent.action.VIEW' />
+                                <category android:name='android.intent.category.BROWSABLE' />
+                                <category android:name='android.intent.category.DEFAULT' />
                                 <data android:scheme='telegram://' />
+                            </intent-filter>
+                        </activity>
+                    </application>
+                    </manifest>
+                    """
+            ).indented()
+        ).run().expectClean()
+    }
+
+    @Test
+    fun testWhenNoAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_noWarning() {
+        lint().files(
+            manifest("""
+                    <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
+                    <application android:debuggable='false'>
+                    <meta-data android:name='android.webkit.WebView.EnableSafeBrowsing'/>
+                        <activity android:name='com.example.MainActivity'>
+                            <intent-filter>
+                                <action android:name='android.intent.action.VIEW' />
+                                <category android:name='android.intent.category.BROWSABLE' />
+                                <category android:name='android.intent.category.DEFAULT' />
+                                <data android:scheme='telegram://' />
+                            </intent-filter>
+                        </activity>
+                    </application>
+                    </manifest>
+                    """
+            ).indented()
+        ).run().expectClean()
+    }
+
+    @Test
+    fun testWhenAppLinkMissingAutoVerify_showsWarning() {
+        lint().files(
+            manifest("""
+                    <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
+                    <application android:debuggable='false'>
+                    <meta-data android:name='android.webkit.WebView.EnableSafeBrowsing'/>
+                        <activity android:name='com.example.MainActivity'>
+                            <intent-filter>
+                                <action android:name='android.intent.action.VIEW' />
+                                <category android:name='android.intent.category.BROWSABLE' />
+                                <category android:name='android.intent.category.DEFAULT' />
+                                <data android:scheme='http' />
+                                <data android:scheme='https' />
                             </intent-filter>
                         </activity>
                     </application>
@@ -104,17 +176,17 @@ class CustomSchemeDetectorTest : LintDetectorTest() {
                     """
             ).indented()
         ).run().expect(
-            """
-                    AndroidManifest.xml:5: Warning: Custom scheme intent filters should explicitly set the autoVerify attribute to true [MissingAutoVerifyAttribute]
-                            <intent-filter android:autoVerify='false'>
-                            ^
-                    0 errors, 1 warnings
-                    """
+        """
+        AndroidManifest.xml:5: Warning: This intent filter matches App Links (VIEW, BROWSABLE, DEFAULT, http/https), but is missing the android:autoVerify="true" attribute. See https://developer.android.com/training/app-links/verify-android-applinks [MissingAutoVerifyAttribute]
+                <intent-filter>
+                 ~~~~~~~~~~~~~
+        0 errors, 1 warnings
+        """
         )
     }
 
     @Test
-    fun testWhenNoAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_showsWarning() {
+    fun testWhenAppLinkMissingAutoVerify_showsQuickFix() {
         lint().files(
             manifest("""
                     <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
@@ -123,34 +195,9 @@ class CustomSchemeDetectorTest : LintDetectorTest() {
                         <activity android:name='com.example.MainActivity'>
                             <intent-filter>
                                 <action android:name='android.intent.action.VIEW' />
-                                <data android:scheme='telegram://' />
-                            </intent-filter>
-                        </activity>
-                    </application>
-                    </manifest>
-                    """
-            ).indented()
-        ).run().expect(
-                """
-                    AndroidManifest.xml:5: Warning: Custom scheme intent filters should explicitly set the autoVerify attribute to true [MissingAutoVerifyAttribute]
-                            <intent-filter>
-                            ^
-                    0 errors, 1 warnings
-                    """
-            )
-    }
-
-    @Test
-    fun testWhenNoAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_showsQuickFix() {
-        lint().files(
-            manifest("""
-                    <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
-                    <application android:debuggable='false'>
-                    <meta-data android:name='android.webkit.WebView.EnableSafeBrowsing'/>
-                        <activity android:name='com.example.MainActivity'>
-                            <intent-filter>
-                                <action android:name='android.intent.action.VIEW' />
-                                <data android:scheme='telegram://' />
+                                <category android:name='android.intent.category.BROWSABLE' />
+                                <category android:name='android.intent.category.DEFAULT' />
+                                <data android:scheme='https' />
                             </intent-filter>
                         </activity>
                     </application>
@@ -158,17 +205,17 @@ class CustomSchemeDetectorTest : LintDetectorTest() {
                     """
             ).indented()
         ).run().expectFixDiffs(
-            """
-                    Fix for AndroidManifest.xml line 5: Set autoVerify="true":
-                    @@ -9 +9
-                    -             <intent-filter>
-                    +             <intent-filter android:autoVerify="true" >
-                    """
+        """
+        Fix for AndroidManifest.xml line 5: Set autoVerify="true":
+        @@ -9 +9
+        -             <intent-filter>
+        +             <intent-filter android:autoVerify="true" >
+        """
         )
     }
 
     @Test
-    fun testWhenFalseAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_showsQuickFix() {
+    fun testWhenAppLinkHasAutoVerifyFalse_noWarning() {
         lint().files(
             manifest("""
                     <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
@@ -177,20 +224,15 @@ class CustomSchemeDetectorTest : LintDetectorTest() {
                         <activity android:name='com.example.MainActivity'>
                             <intent-filter android:autoVerify='false'>
                                 <action android:name='android.intent.action.VIEW' />
-                                <data android:scheme='telegram://' />
+                                <category android:name='android.intent.category.BROWSABLE' />
+                                <category android:name='android.intent.category.DEFAULT' />
+                                <data android:scheme='http' />
                             </intent-filter>
                         </activity>
                     </application>
                     </manifest>
                     """
             ).indented()
-        ).run().expectFixDiffs(
-            """
-                    Fix for AndroidManifest.xml line 5: Set autoVerify="true":
-                    @@ -9 +9
-                    -             <intent-filter android:autoVerify="false" >
-                    +             <intent-filter android:autoVerify="true" >
-                    """
-        )
+        ).run().expectClean()
     }
 }

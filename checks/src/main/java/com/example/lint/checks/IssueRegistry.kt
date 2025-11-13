@@ -26,7 +26,6 @@ class IssueRegistry : IssueRegistry() {
     override val issues = listOf(
         BadCryptographyUsageDetector.VULNERABLE_ALGORITHM_ISSUE,
         BadCryptographyUsageDetector.UNSAFE_ALGORITHM_USAGE_ISSUE,
-        CustomSchemeDetector.AUTOVERIFY_ATTRIBUTE_ISSUE,
         DnsConfigDetector.SDK_LEVEL_ISSUE,
         StrandhoggDetector.ISSUE,
         TapjackingDetector.ISSUE,
@@ -39,6 +38,7 @@ class IssueRegistry : IssueRegistry() {
         MisconfiguredFileProviderDetector.DOT_PATH_ISSUE,
         MisconfiguredFileProviderDetector.SLASH_PATH_ISSUE,
         MisconfiguredFileProviderDetector.ABSOLUTE_PATH_ISSUE,
+        MissingAutoVerifyDetector.AUTOVERIFY_ATTRIBUTE_ISSUE,
         WeakPrngDetector.ISSUE,
         SafeBrowsingDetector.MANIFEST_ISSUE,
         PermissionDetector.PROTECTION_LEVEL_ISSUE,
