@@ -40,6 +40,13 @@ class TapjackingDetector : ResourceXmlDetector() {
     override fun getApplicableElements() = setOf(TOGGLE_BUTTON, COMPOUND_BUTTON, CHECK_BOX, SWITCH)
 
     override fun visitElement(context: XmlContext, element: Element) {
+        if (element.hasAttributeNS(ANDROID_URI, ATTR_FILTER_TOUCHES_OBSCURED)) {
+            val attrValue: String? = element.getAttributeNS(ANDROID_URI, ATTR_FILTER_TOUCHES_OBSCURED)
+            if (attrValue.toBoolean()) {
+                return
+            }
+        }
+
         val name = element.getAttributeNodeNS(ANDROID_URI, ATTR_ID)?.value ?: return
 
         if (ENABLE_NAME in name || DISABLE_NAME in name) {
@@ -69,7 +76,7 @@ class TapjackingDetector : ResourceXmlDetector() {
                 briefDescription = "Application's UI is vulnerable to tapjacking attacks",
                 explanation =
                 """
-                    Apps with sensitive UI elements should add the `filterTouchesWithObscured` attribute \
+                    Apps with sensitive UI elements should add the `filterTouchesWhenObscured` attribute \
                     to protect it from tapjacking / overlay attacks.
                     """,
                 category = Category.SECURITY,
