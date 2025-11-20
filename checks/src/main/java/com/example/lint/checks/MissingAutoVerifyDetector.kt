@@ -51,8 +51,8 @@ class MissingAutoVerifyDetector : Detector(), XmlScanner {
 
     override fun visitElement(context: XmlContext, element: Element) {
         if (!hasViewAction(element) ||
-            !hasCategory(element, "android.intent.category.BROWSABLE") ||
-            !hasCategory(element, "android.intent.category.DEFAULT")
+            !hasCategory(element, CATEGORY_BROWSABLE) ||
+            !hasCategory(element, CATEGORY_DEFAULT)
         ) {
             return
         }
@@ -68,7 +68,7 @@ class MissingAutoVerifyDetector : Detector(), XmlScanner {
             }
 
             val scheme = data.getAttributeNS(ANDROID_URI, ATTR_SCHEME)
-            if (scheme == "http" || scheme == "https") {
+            if (scheme == SCHEME_HTTP || scheme == SCHEME_HTTPS) {
                 context.report(
                     AUTOVERIFY_ATTRIBUTE_ISSUE,
                     element,
@@ -87,7 +87,7 @@ class MissingAutoVerifyDetector : Detector(), XmlScanner {
         val actions = element.getElementsByTagName(TAG_ACTION)
 
         for (action in actions) {
-            if (action.getAttributeNS(ANDROID_URI, "name") == "android.intent.action.VIEW") {
+            if (action.getAttributeNS(ANDROID_URI, "name") == ACTION_VIEW) {
                 return true
             }
         }
@@ -106,10 +106,16 @@ class MissingAutoVerifyDetector : Detector(), XmlScanner {
     }
 
     companion object {
+        private const val ACTION_VIEW = "android.intent.action.VIEW"
+        private const val CATEGORY_BROWSABLE = "android.intent.category.BROWSABLE"
+        private const val CATEGORY_DEFAULT = "android.intent.category.DEFAULT"
+        private const val SCHEME_HTTP = "http"
+        private const val SCHEME_HTTPS = "https"
+
         private const val EXPLANATION = """
-            Intent filters that handle `http` or `https` schemes and include \
-            `android.intent.action.VIEW`, `android.intent.category.BROWSABLE`, and \
-            `android.intent.category.DEFAULT` should also include \
+            Intent filters that handle `$SCHEME_HTTP` or `$SCHEME_HTTPS` schemes and include \
+            `$ACTION_VIEW`, `$CATEGORY_BROWSABLE`, and \
+            `$CATEGORY_DEFAULT` should also include \
             `android:autoVerify="true"`. This enables Android App Links, which securely \
             associates your app with your domain. \
             See https://developer.android.com/training/app-links/verify-android-applinks

@@ -44,7 +44,7 @@ class MissingAutoVerifyDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_noWarning() {
+    fun testWhenAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_showsNoWarning() {
         lint()
             .files(
                 manifest("""
@@ -67,7 +67,7 @@ class MissingAutoVerifyDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenHttpSchemeButMissingCategories_noWarning() {
+    fun testWhenHttpSchemeButMissingCategories_showsNoWarning() {
         lint()
             .files(
                 manifest("""
@@ -89,7 +89,7 @@ class MissingAutoVerifyDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenHttpSchemeButMissingAction_noWarning() {
+    fun testWhenHttpSchemeButMissingAction_showsNoWarning() {
         lint()
             .files(
                 manifest("""
@@ -112,7 +112,7 @@ class MissingAutoVerifyDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenFalseAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_noWarning() {
+    fun testWhenFalseAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_showsNoWarning() {
         lint().files(
             manifest("""
                     <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
@@ -134,7 +134,7 @@ class MissingAutoVerifyDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenNoAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_noWarning() {
+    fun testWhenNoAutoVerifyAttributeSpecifiedOnCustomSchemeIntentFilter_showsNoWarning() {
         lint().files(
             manifest("""
                     <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
@@ -215,7 +215,7 @@ class MissingAutoVerifyDetectorTest : LintDetectorTest() {
     }
 
     @Test
-    fun testWhenAppLinkHasAutoVerifyFalse_noWarning() {
+    fun testWhenAppLinkHasAutoVerifyFalse_showsNoWarning() {
         lint().files(
             manifest("""
                     <manifest xmlns:android='http://schemas.android.com/apk/res/android' package='test.pkg'>
